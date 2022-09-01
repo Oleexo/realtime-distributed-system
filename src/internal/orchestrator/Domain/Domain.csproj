@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RootNamespace>Oleexo.RealtimeDistributedSystem.Orchestrator.Domain</RootNamespace>
+        <AssemblyName>Oleexo.RealtimeDistributedSystem.Orchestrator.Domain</AssemblyName>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\common\Common\Common.csproj" />
+      <ProjectReference Include="..\..\common\DomainDrivenDesign\DomainDrivenDesign.csproj" />
+    </ItemGroup>
+
+</Project>

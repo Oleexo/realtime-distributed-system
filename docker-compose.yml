@@ -1,0 +1,20 @@
+version: '3.8'
+services:
+  # Localstack
+  localstack:
+    image: localstack/localstack-full:latest
+    container_name: rds-localstack
+    environment:
+      - SERVICES=sns,sqs,dynamodb
+      - DEFAULT_REGION=eu-central-1
+      - DATA_DIR=/tmp/localstack/data
+      - PORT_WEB_UI=8080
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - AWS_CBOR_DISABLE=1
+    ports:
+      - "4566-4599:4566-4599"
+      - "8080:8080"
+    volumes:
+      - localstack-data:/tmp/localstack
+      - /var/run/docker.sock:/var/run/docker.sock
+  

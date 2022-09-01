@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+option csharp_namespace = "Oleexo.RealtimeDistributedSystem.Grpc.Pusher.Message";
+
+package message;
+
+service Message {
+  rpc Listen (ListenRequest) returns (stream ListenReply);
+}
+
+message ChannelFilter {
+  repeated string tags = 1;
+}
+message ListenRequest {
+  ChannelFilter filter = 1;
+  string device_id = 2;
+}
+
+// The response message containing the greetings.
+message ListenReply {
+  string message = 1;
+}

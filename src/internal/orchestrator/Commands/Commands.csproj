@@ -11,8 +11,8 @@
     <ItemGroup>
       <ProjectReference Include="..\..\common\Commands\Commands.csproj" />
       <ProjectReference Include="..\..\common\Common\Common.csproj" />
+      <ProjectReference Include="..\BrokerManager\BrokerManager.csproj" />
       <ProjectReference Include="..\Domain\Domain.csproj" />
-      <ProjectReference Include="..\Services\Services.csproj" />
     </ItemGroup>
 
     <ItemGroup>

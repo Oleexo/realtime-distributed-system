@@ -42,6 +42,11 @@ internal class FailureResult<TValue> : Result<TValue>
         return failure(_exception);
     }
 
+    public override void Match(Action<TValue>    success,
+                               Action<Exception> failure) {
+        failure(_exception);
+    }
+
     public override TValue    Value => throw new InvalidOperationException("No value in error context");
     public override Exception Error => _exception;
 }

@@ -1,7 +1,6 @@
 ﻿namespace Oleexo.RealtimeDistributedSystem.Common.Monads;
 
-public abstract class Result<TValue> : IResult<TValue>
-{
+public abstract class Result<TValue> : IResult<TValue> {
     public abstract bool IsFaulted { get; }
     public abstract bool IsSuccess { get; }
     public abstract void IfFail(Action<Exception>                                                             f);
@@ -11,27 +10,26 @@ public abstract class Result<TValue> : IResult<TValue>
 
     public abstract TResponse Match<TResponse>(Func<TValue, TResponse>    success,
                                                Func<Exception, TResponse> failure);
-    
+
+    public abstract void Match(Action<TValue>    success,
+                               Action<Exception> failure);
+
     public abstract TValue    Value { get; }
     public abstract Exception Error { get; }
 
-    public static implicit operator Result<TValue>(TValue value)
-    {
+    public static implicit operator Result<TValue>(TValue value) {
         return new SuccessResult<TValue>(value);
     }
 
-    public static implicit operator Result<TValue>(Exception exception)
-    {
+    public static implicit operator Result<TValue>(Exception exception) {
         return new FailureResult<TValue>(exception);
     }
 
-    public static Result<TValue> Success(TValue value)
-    {
+    public static Result<TValue> Success(TValue value) {
         return new SuccessResult<TValue>(value);
     }
 
-    public static Result<TValue> Fail(Exception exception)
-    {
+    public static Result<TValue> Fail(Exception exception) {
         return new FailureResult<TValue>(exception);
     }
 }

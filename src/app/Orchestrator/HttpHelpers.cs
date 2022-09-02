@@ -4,32 +4,42 @@ using Oleexo.RealtimeDistributedSystem.Common.Commands;
 
 namespace Oleexo.RealtimeDistributedSystem.Orchestrator.Api;
 
-public static class HttpHelpers
-{
-    public static Task<IResult> GetAsync<TRequest, TResponse, TQuery, TQueryResponse>(HttpContext httpContext)
-    {
+public static class HttpHelpers {
+    public static Task<IResult> GetAsync<TRequest, TResponse, TQuery, TQueryResponse>(HttpContext httpContext) {
         throw new NotImplementedException();
     }
-    
-    public static async Task<IResult> RunCommandAsync<TRequest, TResponse, TCommand, TCommandResult>(HttpContext httpContext)
-    where TCommand : ICommand<TCommandResult>
-    {
-        var request = await httpContext.Request.ReadFromJsonAsync<TRequest>();
-        var mapper = httpContext.RequestServices.GetRequiredService<IMapper>();
+
+    public static async Task RunCommandAsync<TRequest, TResponse, TCommand, TCommandResult>(HttpContext httpContext)
+        where TCommand : ICommand<TCommandResult> {
+        var request  = await httpContext.Request.ReadFromJsonAsync<TRequest>();
+        var mapper   = httpContext.RequestServices.GetRequiredService<IMapper>();
         var mediator = httpContext.RequestServices.GetRequiredService<IMediator>();
-        var command = mapper.Map<TCommand>(request);
-        var result = await mediator.Send(command, httpContext.RequestAborted);
-        return result.Match(r => HandleResponse<TCommandResult, TResponse>(r, mapper), HandleException);
+        var command  = mapper.Map<TCommand>(request);
+        var result   = await mediator.Send(command, httpContext.RequestAborted);
+        result.Match(r => HandleResponse<TCommandResult, TResponse>(r, mapper, httpContext), e => HandleException(e, httpContext));
     }
 
-    private static IResult HandleResponse<TCommandResult, TResponse>(TCommandResult result, IMapper mapper)
-    {
+    public static async Task RunCommandAsync<TRequest, TCommand>(HttpContext httpContext)
+        where TCommand : ICommand {
+        var request  = await httpContext.Request.ReadFromJsonAsync<TRequest>();
+        var mapper   = httpContext.RequestServices.GetRequiredService<IMapper>();
+        var mediator = httpContext.RequestServices.GetRequiredService<IMediator>();
+        var command  = mapper.Map<TCommand>(request);
+        var result   = await mediator.Send(command, httpContext.RequestAborted);
+        result.Match(_ => httpContext.Response.StatusCode = StatusCodes.Status204NoContent,
+                     exception => HandleException(exception, httpContext));
+    }
+
+    private static void HandleResponse<TCommandResult, TResponse>(TCommandResult result,
+                                                                  IMapper        mapper,
+                                                                  HttpContext    httpContext) {
         var response = mapper.Map<TResponse>(result);
-        return Results.Ok(response);
+        httpContext.Response.StatusCode = StatusCodes.Status200OK;
+        httpContext.Response.WriteAsJsonAsync(response);
     }
 
-    private static IResult HandleException(Exception exception)
-    {
-        return Results.StatusCode(500);
+    private static void HandleException(Exception   exception,
+                                        HttpContext httpContext) {
+        httpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Oleexo.RealtimeDistributedSystem.Orchestrator.Domain.Entities;
 
-namespace Oleexo.RealtimeDistributedSystem.Orchestrator.Services;
+namespace Oleexo.RealtimeDistributedSystem.Orchestrator.BrokerManager;
 
 public abstract class BaseBrokerService : IBrokerService {
     public async Task<QueueInfo> CreateAsync(string            name,

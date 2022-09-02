@@ -12,7 +12,7 @@ public class PusherServer : BaseAggregateRoot<string> {
 
     public QueueInfo Queue     { get; private set; }
     public DateTime  CreatedAt { get; private set; }
-    public DateTime  LastPing  { get; private set; }
+    public DateTime  LastPing  { get;  set; }
 }
 
 public enum QueueType {

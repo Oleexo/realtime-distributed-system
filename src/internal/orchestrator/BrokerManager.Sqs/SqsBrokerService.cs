@@ -1,27 +1,32 @@
-﻿using Amazon;
-using Amazon.Runtime;
+﻿using Amazon.Runtime;
 using Amazon.SQS;
 using Amazon.SQS.Model;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Oleexo.RealtimeDistributedSystem.Orchestrator.Domain.Entities;
 
-namespace Oleexo.RealtimeDistributedSystem.Orchestrator.Services;
+namespace Oleexo.RealtimeDistributedSystem.Orchestrator.BrokerManager.AmazonSqs;
 
 internal class SqsBrokerService : BaseBrokerService {
-    private readonly AmazonSQSClient _client;
+    private readonly ILogger<SqsBrokerService> _logger;
+    private readonly AmazonSQSClient           _client;
 
-    public SqsBrokerService(IOptions<SqsOptions> options) {
+    public SqsBrokerService(IOptions<SqsOptions>      options,
+                            ILogger<SqsBrokerService> logger) {
+        _logger = logger;
         var credentials = new BasicAWSCredentials("Dummy", "Dummy");
-        _client = new AmazonSQSClient(credentials, RegionEndpoint.EUCentral1);
+        _client = new AmazonSQSClient(credentials, new AmazonSQSConfig {
+            ServiceURL = options.Value.Region
+        });
     }
 
-    public override Task DestroyAsync(QueueInfo         queueInfo,
+    public override async Task DestroyAsync(QueueInfo         queueInfo,
                                             CancellationToken cancellationToken = default) {
-
         var request = new DeleteQueueRequest {
             QueueUrl = queueInfo.Name
         };
-        return _client.DeleteQueueAsync(request, cancellationToken);
+        var _ = await _client.DeleteQueueAsync(request, cancellationToken);
+        _logger.LogDebug("Queue deleted with success: {QueueUrl}", queueInfo.Name);
     }
 
     protected override QueueType Type => QueueType.Sqs;
@@ -32,6 +37,7 @@ internal class SqsBrokerService : BaseBrokerService {
             QueueName = queueName
         };
         var response = await _client.CreateQueueAsync(request, cancellationToken);
+        _logger.LogDebug("Queue created with success: {QueueUrl}", response.QueueUrl);
         return response.QueueUrl;
     }
 }

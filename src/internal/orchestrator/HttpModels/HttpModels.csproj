@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RootNamespace>Oleexo.RealtimeDistributedSystem.Orchestrator.HttpModels</RootNamespace>
+        <AssemblyName>Oleexo.RealtimeDistributedSystem.Orchestrator.HttpModels</AssemblyName>
+    </PropertyGroup>
+
+</Project>

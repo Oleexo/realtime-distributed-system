@@ -1,6 +1,5 @@
 namespace Oleexo.RealtimeDistributedSystem.Pusher.Service;
 
-public record ChannelFilter
-{
-    public string[] Tags { get; init; }
+public record ChannelFilter {
+    public string[] Tags { get; init; } = Array.Empty<string>();
 }

@@ -1,8 +1,10 @@
-﻿using Oleexo.RealtimeDistributedSystem.Orchestrator.Domain.Entities;
+﻿using Oleexo.RealtimeDistributedSystem.Common.Domain.ValueObjects;
 
 namespace Oleexo.RealtimeDistributedSystem.Orchestrator.BrokerManager;
 
 public abstract class BaseBrokerService : IBrokerService {
+    protected abstract QueueType Type { get; }
+
     public async Task<QueueInfo> CreateAsync(string            name,
                                              CancellationToken cancellationToken = default) {
         var queueName          = GenerateQueueName(name);
@@ -13,8 +15,6 @@ public abstract class BaseBrokerService : IBrokerService {
 
     public abstract Task DestroyAsync(QueueInfo         queueInfo,
                                       CancellationToken cancellationToken = default);
-
-    protected abstract QueueType Type { get; }
 
     private string GenerateQueueName(string name) {
         return $"pusher-{name}";

@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Logging;
 using Oleexo.RealtimeDistributedSystem.Common.Commands;
+using Oleexo.RealtimeDistributedSystem.Common.Domain.ValueObjects;
 using Oleexo.RealtimeDistributedSystem.Common.Monads;
 using Oleexo.RealtimeDistributedSystem.Orchestrator.BrokerManager;
 using Oleexo.RealtimeDistributedSystem.Orchestrator.Domain.Entities;
@@ -22,20 +23,17 @@ public sealed class RegisterPusherCommandHandler : ICommandHandler<RegisterPushe
 
     public async Task<Result<RegisterPusherResult>> Handle(RegisterPusherCommand command,
                                                            CancellationToken     cancellationToken) {
-        // todo create a queue for the pusher
         var queueInfo = await CreateBroker(command.Name, cancellationToken);
         if (queueInfo.IsFaulted) {
             return Result<RegisterPusherResult>.Fail(queueInfo.Error);
         }
 
         var pusherServer = new PusherServer(command.Name, queueInfo.Value);
-        // todo add row in database to save the pusher with time
-        var isSaved = await _pusherServerRepository.CreateAsync(pusherServer, cancellationToken);
+        var isSaved      = await _pusherServerRepository.CreateAsync(pusherServer, cancellationToken);
         if (!isSaved) {
             await DestroyBroker(pusherServer.Queue);
         }
 
-        // todo return queue name for pusher
         return new RegisterPusherResult(pusherServer.Queue.Type, pusherServer.Queue.Name);
     }
 

@@ -1,9 +1,8 @@
-using Oleexo.RealtimeDistributedSystem.Orchestrator.Domain.Entities;
+using Oleexo.RealtimeDistributedSystem.Common.Domain.ValueObjects;
 
 namespace Oleexo.RealtimeDistributedSystem.Orchestrator.Commands.RegisterPusher;
 
-public record RegisterPusherResult
-{
+public record RegisterPusherResult {
     public RegisterPusherResult(QueueType queueType,
                                 string    queueName) {
         QueueType = queueType;

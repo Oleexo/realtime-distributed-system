@@ -1,5 +1,4 @@
 namespace Oleexo.RealtimeDistributedSystem.DomainDrivenDesign;
 
-public interface IEntityError : IEntityEvent
-{
+public interface IEntityError : IEntityEvent {
 }

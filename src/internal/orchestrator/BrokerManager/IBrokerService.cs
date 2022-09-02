@@ -1,4 +1,4 @@
-﻿using Oleexo.RealtimeDistributedSystem.Orchestrator.Domain.Entities;
+﻿using Oleexo.RealtimeDistributedSystem.Common.Domain.ValueObjects;
 
 namespace Oleexo.RealtimeDistributedSystem.Orchestrator.BrokerManager;
 

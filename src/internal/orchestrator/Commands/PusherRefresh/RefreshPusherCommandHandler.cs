@@ -7,8 +7,8 @@ using Oleexo.RealtimeDistributedSystem.Orchestrator.Domain.Repositories;
 namespace Oleexo.RealtimeDistributedSystem.Orchestrator.Commands.PusherRefresh;
 
 public sealed class RefreshPusherCommandHandler : ICommandHandler<RefreshPusherCommand> {
-    private readonly IPusherServerRepository              _pusherServerRepository;
     private readonly ILogger<RefreshPusherCommandHandler> _logger;
+    private readonly IPusherServerRepository              _pusherServerRepository;
 
     public RefreshPusherCommandHandler(IPusherServerRepository              pusherServerRepository,
                                        ILogger<RefreshPusherCommandHandler> logger) {
@@ -23,8 +23,8 @@ public sealed class RefreshPusherCommandHandler : ICommandHandler<RefreshPusherC
             _logger.LogWarning("Missing pusher server {PusherName}", request.Name);
             return Unit.Value;
         }
-        
-        current.LastPing = DateTime.UtcNow;
+
+        current.LastSeen = DateTime.UtcNow;
         await _pusherServerRepository.UpdateAsync(current, cancellationToken);
         return Unit.Value;
     }

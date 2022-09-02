@@ -1,7 +1,6 @@
 namespace Oleexo.RealtimeDistributedSystem.DomainDrivenDesign;
 
-public interface IAggregateRoot
-{
+public interface IAggregateRoot {
     string PrintableId { get; }
     IReadOnlyCollection<IEntityEvent> GetUncommittedEvents();
     IReadOnlyCollection<IEntityError> GetUncommittedErrors();
@@ -10,7 +9,6 @@ public interface IAggregateRoot
     bool IsValid();
 }
 
-public interface IAggregateRoot<out TId> : IAggregateRoot
-{
+public interface IAggregateRoot<out TId> : IAggregateRoot {
     TId Id { get; }
 }

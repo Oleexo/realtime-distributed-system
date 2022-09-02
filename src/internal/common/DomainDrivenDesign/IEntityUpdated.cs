@@ -1,5 +1,4 @@
 namespace Oleexo.RealtimeDistributedSystem.DomainDrivenDesign;
 
-public interface IEntityUpdated : IEntityEvent
-{
+public interface IEntityUpdated : IEntityEvent {
 }

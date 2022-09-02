@@ -10,12 +10,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <FrameworkReference Include="Microsoft.AspNetCore.App" />
+        <FrameworkReference Include="Microsoft.AspNetCore.App"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\orchestrator\HttpClient\HttpClient.csproj" />
-      <ProjectReference Include="..\BrokerListener.Sqs\BrokerListener.Sqs.csproj" />
-      <ProjectReference Include="..\BrokerListener\BrokerListener.csproj" />
+        <ProjectReference Include="..\..\common\Domain\Domain.csproj"/>
+        <ProjectReference Include="..\..\orchestrator\HttpClient\HttpClient.csproj"/>
+        <ProjectReference Include="..\BrokerListener.Sqs\BrokerListener.Sqs.csproj"/>
+        <ProjectReference Include="..\BrokerListener\BrokerListener.csproj"/>
+        <ProjectReference Include="..\UserManager\UserManager.csproj"/>
     </ItemGroup>
 </Project>

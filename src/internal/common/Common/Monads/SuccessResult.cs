@@ -12,6 +12,9 @@ internal class SuccessResult<TValue> : Result<TValue> {
     public override bool IsFaulted => false;
     public override bool IsSuccess => true;
 
+    public override TValue    Value => _value;
+    public override Exception Error => throw new InvalidOperationException("No error in success context");
+
     public override void IfFail(Action<Exception> f) {
     }
 
@@ -40,7 +43,4 @@ internal class SuccessResult<TValue> : Result<TValue> {
                                Action<Exception> failure) {
         success(_value);
     }
-
-    public override TValue    Value => _value;
-    public override Exception Error => throw new InvalidOperationException("No error in success context");
 }

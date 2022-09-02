@@ -15,6 +15,6 @@ services:
       - "4566-4599:4566-4599"
       - "8080:8080"
     volumes:
-#      - localstack-data:/tmp/localstack
+      #      - localstack-data:/tmp/localstack
       - /var/run/docker.sock:/var/run/docker.sock
   

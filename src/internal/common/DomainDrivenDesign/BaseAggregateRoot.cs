@@ -7,7 +7,7 @@ public abstract class BaseAggregateRoot<T>
     private readonly ICollection<IEntityEvent> _events;
 
     protected BaseAggregateRoot(T id) {
-        Id = id;
+        Id      = id;
         _errors = new List<IEntityError>();
         _events = new List<IEntityEvent>();
     }
@@ -43,7 +43,7 @@ public abstract class BaseAggregateRoot<T>
 
     protected virtual void Raise(IEntityCreated @event) {
         if (_events.OfType<IEntityCreated>()
-            .Any()) {
+                   .Any()) {
             throw new InvalidOperationException("The object is already created");
         }
 
@@ -52,7 +52,7 @@ public abstract class BaseAggregateRoot<T>
 
     protected virtual void Raise(IEntityDeleted @event) {
         if (_events.OfType<IEntityDeleted>()
-            .Any()) {
+                   .Any()) {
             throw new InvalidOperationException("The object is already deleted");
         }
 

@@ -1,8 +1,10 @@
 ﻿namespace Oleexo.RealtimeDistributedSystem.Common.Monads;
 
 public abstract class Result<TValue> : IResult<TValue> {
-    public abstract bool IsFaulted { get; }
-    public abstract bool IsSuccess { get; }
+    public abstract TValue    Value     { get; }
+    public abstract Exception Error     { get; }
+    public abstract bool      IsFaulted { get; }
+    public abstract bool      IsSuccess { get; }
     public abstract void IfFail(Action<Exception>                                                             f);
     public abstract void IfSuccess(Action<TValue>                                                             f);
     public abstract IResult<TReturnedValue> Map<TReturnedValue>(Func<TValue, TReturnedValue>                  f);
@@ -13,9 +15,6 @@ public abstract class Result<TValue> : IResult<TValue> {
 
     public abstract void Match(Action<TValue>    success,
                                Action<Exception> failure);
-
-    public abstract TValue    Value { get; }
-    public abstract Exception Error { get; }
 
     public static implicit operator Result<TValue>(TValue value) {
         return new SuccessResult<TValue>(value);

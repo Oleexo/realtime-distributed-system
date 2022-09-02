@@ -1,7 +1,6 @@
 namespace Oleexo.RealtimeDistributedSystem.Common.Monads;
 
-public abstract class Validation<TFail, TSuccess> : IValidation<TFail, TSuccess>
-{
+public abstract class Validation<TFail, TSuccess> : IValidation<TFail, TSuccess> {
     public abstract bool IsFail    { get; }
     public abstract bool IsSuccess { get; }
 
@@ -15,18 +14,15 @@ public abstract class Validation<TFail, TSuccess> : IValidation<TFail, TSuccess>
     public abstract TSuccess IfFail(Func<IReadOnlyCollection<TFail>, TSuccess> failure);
     public abstract void IfSuccess(Action<TSuccess>                            success);
 
-    public static implicit operator Validation<TFail, TSuccess>(TSuccess value)
-    {
+    public static implicit operator Validation<TFail, TSuccess>(TSuccess value) {
         return new SuccessValidation<TFail, TSuccess>(value);
     }
 
-    public static Validation<TFail, TSuccess> Success(TSuccess value)
-    {
+    public static Validation<TFail, TSuccess> Success(TSuccess value) {
         return new SuccessValidation<TFail, TSuccess>(value);
     }
 
-    public static Validation<TFail, TSuccess> Fail(IReadOnlyCollection<TFail> fails)
-    {
+    public static Validation<TFail, TSuccess> Fail(IReadOnlyCollection<TFail> fails) {
         return new FailureValidation<TFail, TSuccess>(fails);
     }
 }

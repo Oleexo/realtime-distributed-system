@@ -8,4 +8,8 @@
         <AssemblyName>Oleexo.RealtimeDistributedSystem.Orchestrator.HttpModels</AssemblyName>
     </PropertyGroup>
 
+    <ItemGroup>
+        <ProjectReference Include="..\..\common\Domain.ValueObjects\Domain.ValueObjects.csproj"/>
+    </ItemGroup>
+
 </Project>

@@ -2,8 +2,7 @@
 
 namespace Oleexo.RealtimeDistributedSystem.Orchestrator.HttpModels.Requests;
 
-public record RegisterPusherRequest
-{
+public record RegisterPusherRequest {
     [JsonPropertyName("name")]
     public string Name { get; init; } = string.Empty;
 }

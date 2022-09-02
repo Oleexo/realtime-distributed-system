@@ -1,7 +1,6 @@
 namespace Oleexo.RealtimeDistributedSystem.Common.Monads;
 
-public interface IResult<TValue>
-{
+public interface IResult<TValue> {
     bool IsFaulted { get; }
     bool IsSuccess { get; }
     void IfFail(Action<Exception>                                                             f);

@@ -1,4 +1,7 @@
 using GrpcPusher.Services;
+using Oleexo.RealtimeDistributedSystem.Common.Data.DynamoDb;
+using Oleexo.RealtimeDistributedSystem.Pusher.Service;
+using Oleexo.RealtimeDistributedSystem.Pusher.UserManager;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,13 +10,16 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddGrpc();
+builder.Services.AddUserManager();
+builder.Services.AddUserPresenceSystem(builder.Configuration);
+builder.Services.AddCommonDynamoDbPersistence(builder.Configuration);
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-app.MapGrpcService<GreeterService>();
+app.MapGrpcService<MessageService>();
 app.MapGet("/",
-    () =>
-        "Communication with gRPC endpoints must be made through a gRPC client. To learn how to create a client, visit: https://go.microsoft.com/fwlink/?linkid=2086909");
+           () =>
+               "Communication with gRPC endpoints must be made through a gRPC client. To learn how to create a client, visit: https://go.microsoft.com/fwlink/?linkid=2086909");
 
 app.Run();

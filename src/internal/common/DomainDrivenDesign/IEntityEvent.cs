@@ -2,6 +2,5 @@ using MediatR;
 
 namespace Oleexo.RealtimeDistributedSystem.DomainDrivenDesign;
 
-public interface IEntityEvent : INotification
-{
+public interface IEntityEvent : INotification {
 }

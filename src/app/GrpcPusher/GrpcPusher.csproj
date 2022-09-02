@@ -16,4 +16,9 @@
         <PackageReference Include="Grpc.AspNetCore" Version="2.45.0" />
     </ItemGroup>
 
+    <ItemGroup>
+        <ProjectReference Include="..\..\internal\common\Data.DynamoDb\Data.DynamoDb.csproj" />
+        <ProjectReference Include="..\..\internal\pusher\PusherService\PusherService.csproj" />
+    </ItemGroup>
+
 </Project>

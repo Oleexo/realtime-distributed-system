@@ -1,5 +1,4 @@
 namespace Oleexo.RealtimeDistributedSystem.DomainDrivenDesign;
 
-public interface IEntityDeleted : IEntityEvent
-{
+public interface IEntityDeleted : IEntityEvent {
 }

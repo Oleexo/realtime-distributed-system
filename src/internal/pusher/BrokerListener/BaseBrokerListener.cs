@@ -1,12 +1,15 @@
+using System.Text.Json;
+using Oleexo.RealtimeDistributedSystem.Common.Domain.Entities;
+using Oleexo.RealtimeDistributedSystem.Common.Domain.ValueObjects;
+
 namespace Oleexo.RealtimeDistributedSystem.Pusher.BrokerListener;
 
 public abstract class BaseBrokerListener : IBrokerListener {
-    protected BaseBrokerListener() {
-    }
+    protected abstract QueueType Type { get; }
 
-    public void Listen(string             queueType,
-                       string             queueName,
-                       Func<string, Task> messageHandler) {
+    public void Listen(QueueType                  queueType,
+                       string                     queueName,
+                       Func<MessageWrapper, Task> messageHandler) {
         if (queueType != Type) {
             throw new InvalidOperationException("Invalid queue type");
         }
@@ -15,9 +18,11 @@ public abstract class BaseBrokerListener : IBrokerListener {
     }
 
     public abstract Task StopAsync();
-    protected abstract string Type { get; }
 
-    protected abstract void StartListen(string             queueName,
-                                        Func<string, Task> messageHandler);
-    
+    protected abstract void StartListen(string                     queueName,
+                                        Func<MessageWrapper, Task> messageHandler);
+
+    protected MessageWrapper? DeserializeMessage(string payload) {
+        return JsonSerializer.Deserialize<MessageWrapper>(payload);
+    }
 }

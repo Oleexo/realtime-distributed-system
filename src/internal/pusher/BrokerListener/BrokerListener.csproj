@@ -9,4 +9,8 @@
 
     </PropertyGroup>
 
+    <ItemGroup>
+        <ProjectReference Include="..\..\common\Domain\Domain.csproj"/>
+    </ItemGroup>
+
 </Project>

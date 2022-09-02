@@ -3,13 +3,13 @@ using Amazon.SQS;
 using Amazon.SQS.Model;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Oleexo.RealtimeDistributedSystem.Orchestrator.Domain.Entities;
+using Oleexo.RealtimeDistributedSystem.Common.Domain.ValueObjects;
 
 namespace Oleexo.RealtimeDistributedSystem.Orchestrator.BrokerManager.AmazonSqs;
 
 internal class SqsBrokerService : BaseBrokerService {
-    private readonly ILogger<SqsBrokerService> _logger;
     private readonly AmazonSQSClient           _client;
+    private readonly ILogger<SqsBrokerService> _logger;
 
     public SqsBrokerService(IOptions<SqsOptions>      options,
                             ILogger<SqsBrokerService> logger) {
@@ -20,6 +20,8 @@ internal class SqsBrokerService : BaseBrokerService {
         });
     }
 
+    protected override QueueType Type => QueueType.Sqs;
+
     public override async Task DestroyAsync(QueueInfo         queueInfo,
                                             CancellationToken cancellationToken = default) {
         var request = new DeleteQueueRequest {
@@ -28,8 +30,6 @@ internal class SqsBrokerService : BaseBrokerService {
         var _ = await _client.DeleteQueueAsync(request, cancellationToken);
         _logger.LogDebug("Queue deleted with success: {QueueUrl}", queueInfo.Name);
     }
-
-    protected override QueueType Type => QueueType.Sqs;
 
     protected override async Task<string> CreateQueue(string            queueName,
                                                       CancellationToken cancellationToken) {

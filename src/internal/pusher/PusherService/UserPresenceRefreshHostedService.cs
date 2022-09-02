@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Oleexo.RealtimeDistributedSystem.Pusher.UserManager;
 
 namespace Oleexo.RealtimeDistributedSystem.Pusher.Service;
 

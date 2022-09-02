@@ -1,9 +1,12 @@
+using Oleexo.RealtimeDistributedSystem.Common.Domain.Entities;
+using Oleexo.RealtimeDistributedSystem.Common.Domain.ValueObjects;
+
 namespace Oleexo.RealtimeDistributedSystem.Pusher.BrokerListener;
 
-public interface IBrokerListener  {
-    void Listen(string             queueType,
-                string             queueName,
-                Func<string, Task> messageHandler);
+public interface IBrokerListener {
+    void Listen(QueueType                  queueType,
+                string                     queueName,
+                Func<MessageWrapper, Task> messageHandler);
 
     Task StopAsync();
 }

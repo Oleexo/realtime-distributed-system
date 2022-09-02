@@ -10,8 +10,8 @@ public class RegisterPusherMapping : Profile {
     public RegisterPusherMapping() {
         CreateMap<RegisterPusherRequest, RegisterPusherCommand>();
         CreateMap<RegisterPusherResult, RegisterPusherResponse>()
-           .ForMember(p => p.QueueType, 
-                      dst => dst.MapFrom(x=> x.QueueType.ToString()));
+           .ForMember(p => p.QueueType,
+                      dst => dst.MapFrom(x => x.QueueType.ToString()));
     }
 }
 

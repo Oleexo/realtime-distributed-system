@@ -1,5 +1,5 @@
 var builder = WebApplication.CreateBuilder(args);
-var app = builder.Build();
+var app     = builder.Build();
 
 // Get all messages
 app.MapGet("/message/:channel", () => "Hello World!");

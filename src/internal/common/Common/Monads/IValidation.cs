@@ -1,7 +1,6 @@
 namespace Oleexo.RealtimeDistributedSystem.Common.Monads;
 
-public interface IValidation<TFail, TSuccess>
-{
+public interface IValidation<TFail, TSuccess> {
     bool IsFail    { get; }
     bool IsSuccess { get; }
 

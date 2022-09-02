@@ -10,7 +10,7 @@ using Oleexo.RealtimeDistributedSystem.Orchestrator.HttpModels.Responses;
 using static Oleexo.RealtimeDistributedSystem.Orchestrator.Api.HttpHelpers;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddBrokerService(builder.Configuration);
+builder.Services.AddSqsBrokerService(builder.Configuration);
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddMediatR(typeof(RegisterPusherCommand));
 builder.Services.AddPersistence();

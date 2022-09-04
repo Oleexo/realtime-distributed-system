@@ -29,6 +29,7 @@ public sealed class UnregisterPusherCommandHandler : ICommandHandler<UnregisterP
         }
 
         await _brokerService.DestroyAsync(current.Queue, cancellationToken);
+        await _pusherServerRepository.DeleteAsync(current.Id, cancellationToken);
         return Unit.Value;
     }
 }

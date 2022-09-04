@@ -12,7 +12,8 @@ public abstract class BaseAggregateRoot<T>
         _events = new List<IEntityEvent>();
     }
 
-    public T Id { get; }
+    // ReSharper disable once AutoPropertyCanBeMadeGetOnly.Local
+    public T Id { get; private set; }
 
     public string PrintableId => Id.ToString() ?? throw new NullReferenceException("Id should ne be null");
 

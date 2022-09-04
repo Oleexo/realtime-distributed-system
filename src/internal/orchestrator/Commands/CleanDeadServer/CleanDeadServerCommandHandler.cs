@@ -25,12 +25,17 @@ public sealed class CleanDeadServerCommandHandler : ICommandHandler<CleanDeadSer
         var servers = await _pusherServerRepository.GetAllAsync(cancellationToken);
 
         foreach (var server in servers) {
-            if (server.LastSeen.AddMinutes(1) <= DateTime.Now) {
+            if (server.LastSeen.AddMinutes(1) >= DateTimeOffset.UtcNow) {
                 continue;
             }
 
-            _logger.LogInformation("Server {ServerName} is dead since {LastPing}", server.Id, server.LastSeen);
+            var since = DateTimeOffset.UtcNow - server.LastSeen;
+            _logger.LogInformation("Server {ServerName} is dead since {LastPing} - {Duration}",
+                                   server.Id,
+                                   server.LastSeen,
+                                   since);
             await _brokerService.DestroyAsync(server.Queue, cancellationToken);
+            await _pusherServerRepository.DeleteAsync(server.Id, cancellationToken);
         }
 
         return Unit.Value;

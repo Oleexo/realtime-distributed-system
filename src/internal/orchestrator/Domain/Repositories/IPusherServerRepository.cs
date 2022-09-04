@@ -13,4 +13,7 @@ public interface IPusherServerRepository {
 
     Task<bool> UpdateAsync(PusherServer      current,
                            CancellationToken cancellationToken = default);
+
+    Task DeleteAsync(string            id,
+                     CancellationToken cancellationToken = default);
 }

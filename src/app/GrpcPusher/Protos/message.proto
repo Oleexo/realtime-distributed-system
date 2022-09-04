@@ -16,7 +16,6 @@ message ListenRequest {
   string device_id = 2;
 }
 
-// The response message containing the greetings.
 message ListenReply {
   string message = 1;
 }

@@ -13,4 +13,5 @@ public interface IUserManager {
     Task RefreshAllAsync();
     Task DispatchAsync(MessageWrapper wrapper);
     void SetQueueInfo(QueueInfo       queueInfo);
+    bool IsReady();
 }

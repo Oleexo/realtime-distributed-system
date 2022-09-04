@@ -20,7 +20,7 @@ public sealed class ServerCleanerHostedService : IHostedService, IDisposable {
 
     public Task StartAsync(CancellationToken cancellationToken) {
         _logger.LogInformation("Start clean dead server hosted service");
-        _timer = new Timer(CleanDeadServers, null, TimeSpan.Zero,
+        _timer = new Timer(CleanDeadServers, null, TimeSpan.FromSeconds(5),
                            TimeSpan.FromSeconds(30));
         return Task.CompletedTask;
     }
@@ -33,10 +33,15 @@ public sealed class ServerCleanerHostedService : IHostedService, IDisposable {
     }
 
     private void CleanDeadServers(object? state) {
-        var result = _mediator.Send(new CleanDeadServerCommand())
-                              .Result;
-        if (result.IsFaulted) {
-            _logger.LogWarning("Clean dead server failed");
+        try {
+            var result = _mediator.Send(new CleanDeadServerCommand())
+                                  .Result;
+            if (result.IsFaulted) {
+                _logger.LogWarning("Clean dead server failed");
+            }
+        }
+        catch (Exception e) {
+            _logger.LogWarning(e,"Clean dead server failed");
         }
     }
 }

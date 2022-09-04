@@ -1,5 +1,7 @@
 using GrpcPusher.Services;
 using Oleexo.RealtimeDistributedSystem.Common.Data.DynamoDb;
+using Oleexo.RealtimeDistributedSystem.Common.Data.Repositories.DynamoDb;
+using Oleexo.RealtimeDistributedSystem.Orchestrator.HttpClient;
 using Oleexo.RealtimeDistributedSystem.Pusher.Service;
 using Oleexo.RealtimeDistributedSystem.Pusher.UserManager;
 
@@ -12,7 +14,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddGrpc();
 builder.Services.AddUserManager();
 builder.Services.AddUserPresenceSystem(builder.Configuration);
-builder.Services.AddCommonDynamoDbPersistence(builder.Configuration);
+builder.Services.AddDynamoDbPersistence(builder.Configuration);
+builder.Services.AddCommonRepositories();
+builder.Services.AddUserPresenceHealthCheck();
+builder.Services.AddOrchestratorApi(builder.Configuration);
 
 var app = builder.Build();
 

@@ -34,6 +34,9 @@ public sealed class RegisterPusherCommandHandler : ICommandHandler<RegisterPushe
             await DestroyBroker(pusherServer.Queue);
         }
 
+        _logger.LogInformation("Pusher server register {PusherName} at {RegisterDate}", 
+                               pusherServer.Id,
+                               pusherServer.CreatedAt);
         return new RegisterPusherResult(pusherServer.Queue.Type, pusherServer.Queue.Name);
     }
 

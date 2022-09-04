@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RootNamespace>Oleexo.RealtimeDistributedSystem.Common.Data.Repositories.DynamoDb</RootNamespace>
+        <AssemblyName>Oleexo.RealtimeDistributedSystem.Common.Data.Repositories.DynamoDb</AssemblyName>
+
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Data.DynamoDb\Data.DynamoDb.csproj" />
+    </ItemGroup>
+
+</Project>

@@ -66,4 +66,8 @@ internal class UserManager : IUserManager {
     public void SetQueueInfo(QueueInfo queueInfo) {
         _queueInfo = queueInfo;
     }
+
+    public bool IsReady() {
+        return _queueInfo is not null;
+    }
 }

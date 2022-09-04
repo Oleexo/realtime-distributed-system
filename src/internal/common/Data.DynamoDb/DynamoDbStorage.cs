@@ -9,7 +9,7 @@ using Oleexo.RealtimeDistributedSystem.Common.Extensions;
 namespace Oleexo.RealtimeDistributedSystem.Common.Data.DynamoDb;
 
 [ExcludeFromCodeCoverage]
-internal abstract class DynamoDbStorage {
+public abstract class DynamoDbStorage {
     private readonly ILogger _logger;
     private readonly string  _tableName;
 
@@ -147,8 +147,7 @@ internal abstract class DynamoDbStorage {
         }
     }
 
-    public async Task<IReadOnlyCollection<TResult>> ReadEntriesAsync<TResult>(string                                            tableName,
-                                                                              string                                            keyConditionExpression,
+    public async Task<IReadOnlyCollection<TResult>> ReadEntriesAsync<TResult>(string                                            keyConditionExpression,
                                                                               Dictionary<string, AttributeValue>                expressionAttributes,
                                                                               Func<Dictionary<string, AttributeValue>, TResult> resolver,
                                                                               string?                                           indexName         = null,
@@ -159,7 +158,7 @@ internal abstract class DynamoDbStorage {
         try {
             var request = new QueryRequest {
                 IndexName                 = indexName,
-                TableName                 = tableName,
+                TableName                 = _tableName,
                 KeyConditionExpression    = keyConditionExpression,
                 ScanIndexForward          = scanIndexForward,
                 ConsistentRead            = false,

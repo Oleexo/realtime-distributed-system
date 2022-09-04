@@ -16,6 +16,7 @@ internal sealed class StartupTaskManager : IStartupTaskStatus {
 
     public async Task RunAsync(IServiceProvider  services,
                                CancellationToken cancellationToken = default) {
+        _logger.LogDebug("Start startup tasks");
         using var scope = services.CreateScope();
         var       tasks = scope.ServiceProvider.GetServices<IStartupTask>();
 
@@ -34,5 +35,7 @@ internal sealed class StartupTaskManager : IStartupTaskStatus {
         }
 
         IsFinished = true;
+        _logger.LogDebug("End startup tasks");
+
     }
 }

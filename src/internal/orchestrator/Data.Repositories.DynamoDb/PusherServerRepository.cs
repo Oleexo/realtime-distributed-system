@@ -41,10 +41,10 @@ public class PusherServerRepository : BaseRepository<PusherServer>, IPusherServe
         return true;
     }
 
-    public async Task DeleteAsync(string            id,
-                                  CancellationToken cancellationToken = default) {
+    public Task DeleteAsync(string            id,
+                            CancellationToken cancellationToken = default) {
         var key = GetHashKey(id);
-        await DeleteEntryAsync(new Dictionary<string, AttributeValue> {
+        return DeleteEntryAsync(new Dictionary<string, AttributeValue> {
             { "PK", new AttributeValue { S = PrimaryKey } },
             { "SK", new AttributeValue { S = key } }
         }, cancellationToken: cancellationToken);
@@ -55,11 +55,13 @@ public class PusherServerRepository : BaseRepository<PusherServer>, IPusherServe
                                                            .S), fields["queue_name"]
                                      .S);
         var data = new Data {
-            Id = fields["SK"]
+            Id = fields["server_name"]
                .S,
             Queue = queue,
-            CreatedAt = DateTimeOffset.Parse(fields["created_at"].S),
-            LastSeen = DateTimeOffset.Parse(fields["last_seen"].S)
+            CreatedAt = DateTimeOffset.Parse(fields["created_at"]
+                                                .S),
+            LastSeen = DateTimeOffset.Parse(fields["last_seen"]
+                                               .S)
         };
         return new PusherServer(data);
     }
@@ -67,12 +69,13 @@ public class PusherServerRepository : BaseRepository<PusherServer>, IPusherServe
     protected override Dictionary<string, AttributeValue> ToFields(PusherServer entity) {
         var key = GetHashKey(entity.Id);
         return new Dictionary<string, AttributeValue> {
-            { "PK", new AttributeValue { S         = PrimaryKey } },
-            { "SK", new AttributeValue { S         = key } },
-            { "queue_type", new AttributeValue { S = entity.Queue.Type.ToString() } },
-            { "queue_name", new AttributeValue { S = entity.Queue.Name } },
-            { "created_at", new AttributeValue { S = entity.CreatedAt.ToString("O", CultureInfo.InvariantCulture) } },
-            { "last_seen", new AttributeValue { S  = entity.LastSeen.ToString("O", CultureInfo.InvariantCulture) } }
+            { "PK", new AttributeValue { S          = PrimaryKey } },
+            { "SK", new AttributeValue { S          = key } },
+            { "server_name", new AttributeValue { S = entity.Id } },
+            { "queue_type", new AttributeValue { S  = entity.Queue.Type.ToString() } },
+            { "queue_name", new AttributeValue { S  = entity.Queue.Name } },
+            { "created_at", new AttributeValue { S  = entity.CreatedAt.ToString("O", CultureInfo.InvariantCulture) } },
+            { "last_seen", new AttributeValue { S   = entity.LastSeen.ToString("O", CultureInfo.InvariantCulture) } }
         };
     }
 
@@ -81,9 +84,9 @@ public class PusherServerRepository : BaseRepository<PusherServer>, IPusherServe
     }
 
     private record Data : PusherServer.IData {
-        public string    Id        { get; init; } = string.Empty;
-        public QueueInfo Queue     { get; init; } = QueueInfo.Empty;
-        public DateTimeOffset  CreatedAt { get; init; }
-        public DateTimeOffset  LastSeen  { get; init; }
+        public string         Id        { get; init; } = string.Empty;
+        public QueueInfo      Queue     { get; init; } = QueueInfo.Empty;
+        public DateTimeOffset CreatedAt { get; init; }
+        public DateTimeOffset LastSeen  { get; init; }
     }
 }

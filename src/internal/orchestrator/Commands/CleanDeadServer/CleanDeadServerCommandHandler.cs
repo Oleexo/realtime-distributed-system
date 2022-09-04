@@ -24,6 +24,7 @@ public sealed class CleanDeadServerCommandHandler : ICommandHandler<CleanDeadSer
                                            CancellationToken      cancellationToken) {
         var servers = await _pusherServerRepository.GetAllAsync(cancellationToken);
 
+        var removedServers = 0;
         foreach (var server in servers) {
             if (server.LastSeen.AddMinutes(1) >= DateTimeOffset.UtcNow) {
                 continue;
@@ -36,8 +37,12 @@ public sealed class CleanDeadServerCommandHandler : ICommandHandler<CleanDeadSer
                                    since);
             await _brokerService.DestroyAsync(server.Queue, cancellationToken);
             await _pusherServerRepository.DeleteAsync(server.Id, cancellationToken);
+            removedServers += 1;
         }
 
+        _logger.LogInformation("{AliveServer} servers alive. {DeadServers} servers dead", 
+                               servers.Count - removedServers,
+                               removedServers);
         return Unit.Value;
     }
 }

@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 using Oleexo.RealtimeDistributedSystem.Common.Commands;
 
-namespace Oleexo.RealtimeDistributedSystem.Orchestrator.Api;
+namespace Oleexo.RealtimeDistributedSystem.Common.AspNetCoreHelpers;
 
 public static class HttpHelpers {
     public static Task<IResult> GetAsync<TRequest, TResponse, TQuery, TQueryResponse>(HttpContext httpContext) {

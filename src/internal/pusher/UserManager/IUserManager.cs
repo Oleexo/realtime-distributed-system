@@ -14,4 +14,5 @@ public interface IUserManager {
     Task DispatchAsync(MessageWrapper wrapper);
     void SetQueueInfo(QueueInfo       queueInfo);
     bool IsReady();
+    Task DisconnectAllAsync(CancellationToken cancellationToken = default);
 }

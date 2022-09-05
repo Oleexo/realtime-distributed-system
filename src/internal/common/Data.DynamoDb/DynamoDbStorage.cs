@@ -147,14 +147,14 @@ public abstract class DynamoDbStorage {
         }
     }
 
-    public async Task<IReadOnlyCollection<TResult>> ReadEntriesAsync<TResult>(string                                            keyConditionExpression,
-                                                                              Dictionary<string, AttributeValue>                expressionAttributes,
-                                                                              Func<Dictionary<string, AttributeValue>, TResult> resolver,
-                                                                              string?                                           indexName         = null,
-                                                                              int?                                              limit             = null,
-                                                                              bool                                              scanIndexForward  = false,
-                                                                              IReadOnlyCollection<string>?                      projections       = null,
-                                                                              CancellationToken                                 cancellationToken = default) {
+    protected async Task<IReadOnlyCollection<TResult>> ReadEntriesAsync<TResult>(string                                            keyConditionExpression,
+                                                                                 Dictionary<string, AttributeValue>                expressionAttributes,
+                                                                                 Func<Dictionary<string, AttributeValue>, TResult> resolver,
+                                                                                 string?                                           indexName         = null,
+                                                                                 int?                                              limit             = null,
+                                                                                 bool                                              scanIndexForward  = false,
+                                                                                 IReadOnlyCollection<string>?                      projections       = null,
+                                                                                 CancellationToken                                 cancellationToken = default) {
         try {
             var request = new QueryRequest {
                 IndexName                 = indexName,
@@ -234,11 +234,30 @@ public abstract class DynamoDbStorage {
         }
     }
 
-    public async Task PutEntriesAsync<T>(string                 tableName,
-                                         IReadOnlyCollection<T> addedItems,
-                                         IReadOnlyCollection<T> removedItems,
-                                         Func<T, Document>      resolver,
-                                         CancellationToken      cancellationToken = default) {
+    protected Task PutEntriesAsync(IReadOnlyCollection<Document>  putItems,
+                                   IReadOnlyCollection<Document>? deleteItems       = null,
+                                   CancellationToken              cancellationToken = default) {
+        var table      = Table.LoadTable(DbClient, _tableName);
+        var batchWrite = table.CreateBatchWrite();
+
+        foreach (var document in putItems) {
+            batchWrite.AddDocumentToPut(document);
+        }
+
+        if (deleteItems is not null) {
+            foreach (var document in deleteItems) {
+                batchWrite.AddItemToDelete(document);
+            }
+        }
+
+        return batchWrite.ExecuteAsync(cancellationToken);
+    }
+
+    protected async Task PutEntriesAsync<T>(string                 tableName,
+                                            IReadOnlyCollection<T> addedItems,
+                                            IReadOnlyCollection<T> removedItems,
+                                            Func<T, Document>      resolver,
+                                            CancellationToken      cancellationToken = default) {
         var table      = Table.LoadTable(DbClient, tableName);
         var batchWrite = table.CreateBatchWrite();
 
@@ -279,6 +298,39 @@ public abstract class DynamoDbStorage {
         }
     }
 
+    protected async Task DeletePartitionAsync(string            hashKeyName,
+                                              string            hashKeyValue,
+                                              string            rangeKeyName,
+                                              CancellationToken cancellationToken = default) {
+        Dictionary<string, AttributeValue>? lastKeyEvaluated;
+        var                                 table = Table.LoadTable(DbClient, _tableName);
+        do {
+            var request = new QueryRequest {
+                TableName              = _tableName,
+                KeyConditionExpression = "#Id = :Id",
+                ExpressionAttributeNames = new Dictionary<string, string> {
+                    { "#Id", hashKeyName }
+                },
+                ExpressionAttributeValues = new Dictionary<string, AttributeValue> {
+                    { ":Id", new AttributeValue { S = hashKeyValue } }
+                },
+                Limit = 25
+            };
+            var response   = await DbClient.QueryAsync(request, cancellationToken);
+            var batchWrite = table.CreateBatchWrite();
+
+            foreach (Dictionary<string, AttributeValue> item in response.Items) {
+                batchWrite.AddKeyToDelete(item[hashKeyName]
+                                             .S, item[rangeKeyName]
+                                             .S);
+            }
+
+            await batchWrite.ExecuteAsync(cancellationToken);
+            lastKeyEvaluated = response.LastEvaluatedKey;
+        } while (lastKeyEvaluated       != null &&
+                 lastKeyEvaluated.Count != 0);
+    }
+
     /// <summary>
     ///     Delete an entry from a DynamoDB table
     /// </summary>
@@ -287,10 +339,10 @@ public abstract class DynamoDbStorage {
     /// <param name="conditionValues">Optional field/attribute values used in the conditional expression</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public Task DeleteEntryAsync(Dictionary<string, AttributeValue>  keys,
-                                 string                              conditionExpression = "",
-                                 Dictionary<string, AttributeValue>? conditionValues     = null,
-                                 CancellationToken                   cancellationToken   = default) {
+    protected Task DeleteEntryAsync(Dictionary<string, AttributeValue>  keys,
+                                    string                              conditionExpression = "",
+                                    Dictionary<string, AttributeValue>? conditionValues     = null,
+                                    CancellationToken                   cancellationToken   = default) {
         if (_logger.IsEnabled(LogLevel.Trace)) {
             _logger.LogTrace("Deleting table {TableName}  entry with key(s) {Keys}", _tableName, keys.ToHumanReadableString());
         }

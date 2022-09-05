@@ -5,6 +5,11 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <ServerGarbageCollection>true</ServerGarbageCollection>
+        <LangVersion>preview</LangVersion>
+        <AssemblyName>Oleexo.RealtimeDistributedSystem.GrpcPusher.Api</AssemblyName>
+        <RootNamespace>Oleexo.RealtimeDistributedSystem.GrpcPusher.Api</RootNamespace>
+
     </PropertyGroup>
 
     <ItemGroup>

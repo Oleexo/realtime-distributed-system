@@ -21,15 +21,14 @@ internal class UserPresenceRefreshHostedService : IHostedService, IDisposable {
     }
 
     public Task StartAsync(CancellationToken cancellationToken) {
-        _timer = new Timer(RefreshConnectedUsers, null, TimeSpan.Zero,
+        _timer = new Timer(RefreshConnectedUsers, null, TimeSpan.FromSeconds(5),
                            TimeSpan.FromSeconds(5));
         return Task.CompletedTask;
     }
 
     public Task StopAsync(CancellationToken cancellationToken) {
         _timer?.Change(Timeout.Infinite, 0);
-
-        return Task.CompletedTask;
+        return _userManager.DisconnectAllAsync(cancellationToken);
     }
 
     private void RefreshConnectedUsers(object? state) {

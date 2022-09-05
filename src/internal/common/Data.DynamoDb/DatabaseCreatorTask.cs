@@ -18,12 +18,24 @@ internal class DatabaseCreatorTask : DynamoDbStorage, IStartupTask {
 
     public async Task RunAsync(CancellationToken cancellationToken = default) {
         await InitializeTable(new List<KeySchemaElement> {
-            new KeySchemaElement("PK", KeyType.HASH),
-            new KeySchemaElement("SK", KeyType.RANGE)
-        }, new List<AttributeDefinition> {
-            new AttributeDefinition("PK", ScalarAttributeType.S),
-            new AttributeDefinition("SK", ScalarAttributeType.S),
-        });
+                                  new KeySchemaElement("PK", KeyType.HASH),
+                                  new KeySchemaElement("SK", KeyType.RANGE)
+                              }, new List<AttributeDefinition> {
+                                  new AttributeDefinition("PK", ScalarAttributeType.S),
+                                  new AttributeDefinition("SK", ScalarAttributeType.S),
+                              },
+                              new List<GlobalSecondaryIndex> {
+                                  new GlobalSecondaryIndex {
+                                      Projection = null,
+                                      IndexName = "gsi_1",
+                                      KeySchema = new List<KeySchemaElement> {
+                                          new KeySchemaElement("GSI_PK1", KeyType.HASH),
+                                          new KeySchemaElement("GSI_SK1", KeyType.RANGE)
+                                      },
+                                      ProvisionedThroughput = null
+                                  }
+                              },
+                              ttlAttributeName: "ttl");
     }
 
     protected override AmazonDynamoDBClient DbClient => _dynamoDbContext.Instance;

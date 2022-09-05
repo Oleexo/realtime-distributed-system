@@ -49,11 +49,12 @@ public sealed class SqsBrokerListener : BaseBrokerListener, IDisposable {
             try {
                 while (!_isStopping) {
                     var request = new ReceiveMessageRequest {
-                        QueueUrl          = queueName,
+                        QueueUrl          = queueName.Replace("localstack", "localhost"),
                         VisibilityTimeout = 30,
                         WaitTimeSeconds   = 3
                     };
                     var response = await _client.ReceiveMessageAsync(request, _stopping.Token);
+                    _logger.LogDebug("Messages received {Count}", response.Messages.Count);
                     foreach (var message in response.Messages) {
                         var wrapper = DeserializeMessage(message.Body);
                         if (wrapper is not null) {

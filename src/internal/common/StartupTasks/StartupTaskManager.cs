@@ -6,17 +6,12 @@ using Oleexo.RealtimeDistributedSystem.Common.StartupTasks.Abstractions;
 namespace Oleexo.RealtimeDistributedSystem.Common.StartupTasks;
 
 internal sealed class StartupTaskManager : IStartupTaskStatus {
-    private readonly ILogger<StartupTaskManager> _logger;
-
-    public StartupTaskManager(ILogger<StartupTaskManager> logger) {
-        _logger = logger;
-    }
-
     public bool IsFinished { get; private set; }
 
     public async Task RunAsync(IServiceProvider  services,
                                CancellationToken cancellationToken = default) {
-        _logger.LogDebug("Start startup tasks");
+        var logger = services.GetRequiredService<ILogger<StartupTaskManager>>();
+        logger.LogDebug("Start startup tasks");
         using var scope = services.CreateScope();
         var       tasks = scope.ServiceProvider.GetServices<IStartupTask>();
 
@@ -27,15 +22,15 @@ internal sealed class StartupTaskManager : IStartupTaskStatus {
             }
             catch (Exception e) {
                 sw.Stop();
-                _logger.LogError(e, "The task {TaskName} failed in {ElapsedMilliseconds}ms", task.Name, sw.ElapsedMilliseconds);
+                logger.LogError(e, "The task {TaskName} failed in {ElapsedMilliseconds}ms", task.Name, sw.ElapsedMilliseconds);
                 throw;
             }
 
-            _logger.LogInformation("The task {TaskName} was done in {ElapsedMilliseconds}ms", task.Name, sw.ElapsedMilliseconds);
+            logger.LogInformation("The task {TaskName} was done in {ElapsedMilliseconds}ms", task.Name, sw.ElapsedMilliseconds);
         }
 
         IsFinished = true;
-        _logger.LogDebug("End startup tasks");
+        logger.LogDebug("End startup tasks");
 
     }
 }

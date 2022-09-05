@@ -9,7 +9,9 @@ public interface IUserConnectionRepository {
     Task DeleteAsync(string            id,
                      CancellationToken cancellationToken = default);
 
-    Task UpdateLastSeenAsync(string            id,
-                             DateTime          lastSeenValue,
-                             CancellationToken cancellationToken = default);
+    Task UpdateAsync(UserConnection    userConnection,
+                     CancellationToken cancellationToken = default);
+
+    Task<IReadOnlyCollection<UserConnection>> GetConnectedUsersWithTag(string            tag,
+                                                                       CancellationToken cancellationToken = default);
 }

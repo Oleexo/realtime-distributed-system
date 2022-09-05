@@ -8,7 +8,7 @@ public interface IOrchestratorApi {
     [Post("/pusher/register")]
     public Task<RegisterPusherResponse> RegisterPusher(RegisterPusherRequest request);
 
-    [Delete("/pusher/unregister")]
+    [Post("/pusher/unregister")]
     public Task UnregisterPusher(UnregisterPusherRequest request);
 
     [Post("/pusher/refresh")]

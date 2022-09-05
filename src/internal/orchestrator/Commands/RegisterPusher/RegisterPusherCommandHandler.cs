@@ -23,6 +23,11 @@ public sealed class RegisterPusherCommandHandler : ICommandHandler<RegisterPushe
 
     public async Task<Result<RegisterPusherResult>> Handle(RegisterPusherCommand command,
                                                            CancellationToken     cancellationToken) {
+        var existingServer = await _pusherServerRepository.GetByIdAsync(command.Name, cancellationToken);
+        if (existingServer is not null) {
+            _logger.LogInformation("Pusher server already exists {PusherName}", existingServer.Id);
+            return new RegisterPusherResult(existingServer.Queue.Type, existingServer.Queue.Name);
+        }
         var queueInfo = await CreateBroker(command.Name, cancellationToken);
         if (queueInfo.IsFaulted) {
             return Result<RegisterPusherResult>.Fail(queueInfo.Error);

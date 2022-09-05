@@ -10,7 +10,7 @@ using Oleexo.RealtimeDistributedSystem.Orchestrator.Commands.UnregisterPusher;
 using Oleexo.RealtimeDistributedSystem.Orchestrator.Data.Repositories.DynamoDb;
 using Oleexo.RealtimeDistributedSystem.Orchestrator.HttpModels.Requests;
 using Oleexo.RealtimeDistributedSystem.Orchestrator.HttpModels.Responses;
-using static Oleexo.RealtimeDistributedSystem.Orchestrator.Api.HttpHelpers;
+using static Oleexo.RealtimeDistributedSystem.Common.AspNetCoreHelpers.HttpHelpers;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSqsBrokerService(builder.Configuration);
@@ -24,18 +24,16 @@ var app = builder.Build();
 
 app.MapGet("/", () => "Hello World!");
 
-app.MapPost("/pusher/refresh",  RunCommandAsync<RefreshPusherRequest, RefreshPusherCommand>);
-app.MapPost("/pusher/register", RunCommandAsync<RegisterPusherRequest, RegisterPusherResponse, RegisterPusherCommand, RegisterPusherResult>);
-app.MapDelete("/pusher/unregister", RunCommandAsync<UnregisterPusherRequest, UnregisterPusherCommand>);
+app.MapPost("/pusher/refresh",    RunCommandAsync<RefreshPusherRequest, RefreshPusherCommand>);
+app.MapPost("/pusher/register",   RunCommandAsync<RegisterPusherRequest, RegisterPusherResponse, RegisterPusherCommand, RegisterPusherResult>);
+app.MapPost("/pusher/unregister", RunCommandAsync<UnregisterPusherRequest, UnregisterPusherCommand>);
 
 
-app.MapHealthChecks("/healthz/ready", new HealthCheckOptions
-{
+app.MapHealthChecks("/healthz/ready", new HealthCheckOptions {
     Predicate = healthCheck => healthCheck.Tags.Contains("ready")
 });
 
-app.MapHealthChecks("/healthz/live", new HealthCheckOptions
-{
+app.MapHealthChecks("/healthz/live", new HealthCheckOptions {
     Predicate = _ => false
 });
 app.Run();

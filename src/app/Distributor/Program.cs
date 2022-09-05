@@ -1,16 +1,27 @@
-var builder = WebApplication.CreateBuilder(args);
-var app     = builder.Build();
+using Distributor.Models.Mappings;
+using Distributor.Models.Requests;
+using Distributor.Models.Responses;
+using MediatR;
+using Oleexo.RealtimeDistributedSystem.Common.Data.DynamoDb;
+using Oleexo.RealtimeDistributedSystem.Common.Data.Repositories.DynamoDb;
+using Oleexo.RealtimeDistributedSystem.Distributor.BrokerPusher.Sqs;
+using Oleexo.RealtimeDistributedSystem.Distributor.Commands.DispatchMessage;
+using static Oleexo.RealtimeDistributedSystem.Common.AspNetCoreHelpers.HttpHelpers;
 
-// Get all messages
-app.MapGet("/message/:channel", () => "Hello World!");
-// Get one message
-app.MapGet("/message/:channel/:id", () => "Hello world");
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddSqsBrokerPusher(builder.Configuration);
+builder.Services.AddMediatR(typeof(DispatchMessageCommand));
+builder.Services.AddDynamoDbPersistence(builder.Configuration);
+builder.Services.AddCommonRepositories();
+builder.Services.AddAutoMapper(typeof(DispatchMessageMapping));
+var app = builder.Build();
+
 // Post a message
-app.MapPost("/message/:channel", () => "Hello world");
+app.MapPost("/message", RunCommandAsync<DispatchMessageRequest, DispatchMessageResponse, DispatchMessageCommand, long>);
+// Post an event
+app.MapPost("/event", () => "Hello world");
 // Edit message
 app.MapPut("/message/:channel/:messageId", () => "Hello world");
 // Delete message
 app.MapDelete("/message/:channel/:messageId", () => "Hello world");
-// Get all message id for a user
-app.MapGet("/message/lastMessageId", () => "Hello world");
 app.Run();

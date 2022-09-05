@@ -5,12 +5,14 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <ServerGarbageCollection>true</ServerGarbageCollection>
         <LangVersion>preview</LangVersion>
         <AssemblyName>Oleexo.RealtimeDistributedSystem.Orchestrator.Api</AssemblyName>
         <RootNamespace>Oleexo.RealtimeDistributedSystem.Orchestrator.Api</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\..\internal\common\AspNetCoreHelpers\AspNetCoreHelpers.csproj" />
         <ProjectReference Include="..\..\internal\common\Commands\Commands.csproj" />
         <ProjectReference Include="..\..\internal\common\StartupTasks\StartupTasks.csproj" />
         <ProjectReference Include="..\..\internal\orchestrator\BrokerManager.Sqs\BrokerManager.Sqs.csproj" />
@@ -20,7 +22,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="AutoMapper" Version="11.0.1" />
         <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
         <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
     </ItemGroup>

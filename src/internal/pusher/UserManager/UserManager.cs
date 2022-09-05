@@ -1,4 +1,5 @@
 using System.Collections.Concurrent;
+using Microsoft.Extensions.DependencyInjection;
 using Oleexo.RealtimeDistributedSystem.Common.Domain.Entities;
 using Oleexo.RealtimeDistributedSystem.Common.Domain.Repositories;
 using Oleexo.RealtimeDistributedSystem.Common.Domain.ValueObjects;
@@ -6,13 +7,13 @@ using Oleexo.RealtimeDistributedSystem.Common.Domain.ValueObjects;
 namespace Oleexo.RealtimeDistributedSystem.Pusher.UserManager;
 
 internal class UserManager : IUserManager {
+    private readonly IServiceProvider                                   _services;
     private readonly ConcurrentDictionary<ConnectionId, ConnectionInfo> _connections;
-    private readonly IUserConnectionRepository                          _userConnectionRepository;
     private          QueueInfo?                                         _queueInfo;
 
-    public UserManager(IUserConnectionRepository userConnectionRepository) {
-        _userConnectionRepository = userConnectionRepository;
-        _connections              = new ConcurrentDictionary<ConnectionId, ConnectionInfo>();
+    public UserManager(IServiceProvider services) {
+        _services = services;
+        _connections   = new ConcurrentDictionary<ConnectionId, ConnectionInfo>();
     }
 
     public async Task<ConnectionId?> ConnectAsync(string              userId,
@@ -22,6 +23,8 @@ internal class UserManager : IUserManager {
         if (_queueInfo is null) {
             throw new InvalidOperationException("Queue info not set");
         }
+        using var scope                    = _services.CreateScope();
+        var       userConnectionRepository = GetUserConnectionRepository(scope);
 
         var current = new UserConnection {
             DeviceId    = deviceId,
@@ -31,25 +34,46 @@ internal class UserManager : IUserManager {
             LastSeen    = DateTime.UtcNow,
             Queue       = _queueInfo
         };
-        var info = new ConnectionInfo(userId, deviceId, new ConnectionId(current.Id), filter, messageHandler);
+        var info = new ConnectionInfo(userId, deviceId, new ConnectionId(current.Id), filter, current.ConnectedAt, messageHandler);
         if (!_connections.TryAdd(info.Id, info)) {
             return null;
         }
 
-        await _userConnectionRepository.CreateAsync(current);
+        await userConnectionRepository.CreateAsync(current);
         return info.Id;
     }
-
-    public async Task DisconnectAsync(ConnectionId connectionId) {
-        _connections.TryRemove(connectionId, out _);
-        await _userConnectionRepository.DeleteAsync(connectionId.Value);
-    }
-
+    
     public async Task RefreshAllAsync() {
+        if (_queueInfo is null) {
+            throw new InvalidOperationException("Queue info not set");
+        }
+        using var scope                    = _services.CreateScope();
+        var       userConnectionRepository = GetUserConnectionRepository(scope);
+
         foreach (var info in _connections.Values) {
-            await _userConnectionRepository.UpdateLastSeenAsync(info.Id.Value, DateTime.UtcNow);
+            var current = new UserConnection {
+                DeviceId    = info.DeviceId,
+                UserId      = info.UserId,
+                Queue       = _queueInfo,
+                Filter      = info.Filter,
+                ConnectedAt = info.ConnectedAt,
+                LastSeen    = DateTimeOffset.UtcNow
+            };
+            await userConnectionRepository.UpdateAsync(current);
         }
     }
+    
+    private static IUserConnectionRepository GetUserConnectionRepository(IServiceScope serviceScope) {
+        return serviceScope.ServiceProvider.GetRequiredService<IUserConnectionRepository>();
+    }
+    public async Task DisconnectAsync(ConnectionId connectionId) {
+        using var scope                    = _services.CreateScope();
+        var       userConnectionRepository = GetUserConnectionRepository(scope);
+        _connections.TryRemove(connectionId, out _);
+        await userConnectionRepository.DeleteAsync(connectionId.Value);
+    }
+
+
 
     public async Task DispatchAsync(MessageWrapper wrapper) {
         foreach (var recipient in wrapper.Recipients.Distinct()) {
@@ -69,5 +93,14 @@ internal class UserManager : IUserManager {
 
     public bool IsReady() {
         return _queueInfo is not null;
+    }
+
+    public async Task DisconnectAllAsync(CancellationToken cancellationToken = default) {
+        using var scope                    = _services.CreateScope();
+        var       userConnectionRepository = GetUserConnectionRepository(scope);
+
+        foreach (var info in _connections.Values) {
+            await userConnectionRepository.DeleteAsync(info.Id.Value, cancellationToken);
+        }
     }
 }

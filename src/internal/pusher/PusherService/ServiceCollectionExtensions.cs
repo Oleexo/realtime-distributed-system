@@ -11,7 +11,8 @@ public static class ServiceCollectionExtensions {
                                                            IConfiguration          configuration) {
         return services.AddHostedService<MessageListenerHostedService>()
                        .AddHostedService<UserPresenceRefreshHostedService>()
-                       .AddBrokerListener(configuration);
+                       .AddSqsBrokerListener(configuration)
+                       .Configure<ServiceOptions>(configuration.GetSection("Pusher"));
     }
 
     public static IServiceCollection AddUserPresenceHealthCheck(this IServiceCollection services) {

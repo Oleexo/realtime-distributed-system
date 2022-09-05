@@ -16,8 +16,6 @@ public abstract class BaseRepository<T> : DynamoDbStorage {
     }
 
     protected override AmazonDynamoDBClient DbClient => _dynamoDbContext.Instance;
-    protected abstract Dictionary<string, AttributeValue> ToFields(T entity);
-    protected abstract string GetHashKey(string                      id);
 
     protected static string Serialize(object obj) {
         return JsonSerializer.Serialize(obj);

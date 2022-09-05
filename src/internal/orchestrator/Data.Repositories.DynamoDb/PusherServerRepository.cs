@@ -66,7 +66,7 @@ public class PusherServerRepository : BaseRepository<PusherServer>, IPusherServe
         return new PusherServer(data);
     }
 
-    protected override Dictionary<string, AttributeValue> ToFields(PusherServer entity) {
+    private Dictionary<string, AttributeValue> ToFields(PusherServer entity) {
         var key = GetHashKey(entity.Id);
         return new Dictionary<string, AttributeValue> {
             { "PK", new AttributeValue { S          = PrimaryKey } },
@@ -79,7 +79,7 @@ public class PusherServerRepository : BaseRepository<PusherServer>, IPusherServe
         };
     }
 
-    protected override string GetHashKey(string id) {
+    private string GetHashKey(string id) {
         return $"PusherServer#{id}";
     }
 

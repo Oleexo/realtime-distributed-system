@@ -1,6 +1,7 @@
 using Grpc.Core;
+using GrpcPusher;
 
-namespace GrpcPusher.Services;
+namespace Oleexo.RealtimeDistributedSystem.GrpcPusher.Api.Services;
 
 public class GreeterService : Greeter.GreeterBase {
     private readonly ILogger<GreeterService> _logger;

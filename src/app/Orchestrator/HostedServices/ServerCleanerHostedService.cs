@@ -35,13 +35,14 @@ public sealed class ServerCleanerHostedService : IHostedService, IDisposable {
     private void CleanDeadServers(object? state) {
         try {
             var result = _mediator.Send(new CleanDeadServerCommand())
-                                  .Result;
+                                  .GetAwaiter()
+                                  .GetResult();
             if (result.IsFaulted) {
                 _logger.LogWarning("Clean dead server failed");
             }
         }
         catch (Exception e) {
-            _logger.LogWarning(e,"Clean dead server failed");
+            _logger.LogWarning(e, "Clean dead server failed");
         }
     }
 }

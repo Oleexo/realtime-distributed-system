@@ -3,7 +3,7 @@ using Oleexo.RealtimeDistributedSystem.Grpc.Pusher.Message;
 using Oleexo.RealtimeDistributedSystem.Pusher.UserManager;
 using ChannelFilter = Oleexo.RealtimeDistributedSystem.Common.Domain.ValueObjects.ChannelFilter;
 
-namespace GrpcPusher.Services;
+namespace Oleexo.RealtimeDistributedSystem.GrpcPusher.Api.Services;
 
 internal class MessageService : Message.MessageBase {
     private readonly ILogger<MessageService> _logger;
@@ -41,7 +41,9 @@ internal class MessageService : Message.MessageBase {
 
         var connectionId = await _userManager.ConnectAsync(userId,
                                                            request.DeviceId,
-                                                           new ChannelFilter(),
+                                                           new ChannelFilter {
+                                                               Tags = request.Filter.Tags.ToArray()
+                                                           },
                                                            m => HandleMessage(responseStream, m, context.CancellationToken));
         if (connectionId is null) {
             return;

@@ -80,7 +80,7 @@ internal class UserManager : IUserManager {
             var info = _connections.Values.FirstOrDefault(p => p.UserId == recipient);
             // todo better search with dictionary
             if (info is not null) {
-                if (info.Filter.Tags.All(tag => wrapper.Tags.Contains(tag))) {
+                if (info.Filter.Tags.Any(tag => wrapper.Tags.Contains(tag))) {
                     await info.Handler(wrapper.Message);
                 }
             }

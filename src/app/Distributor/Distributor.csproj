@@ -5,6 +5,9 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <AssemblyName>Oleexo.RealtimeDistributedSystem.Distributor.Api</AssemblyName>
+        <RootNamespace>Oleexo.RealtimeDistributedSystem.Distributor.Api</RootNamespace>
+
     </PropertyGroup>
 
     <ItemGroup>

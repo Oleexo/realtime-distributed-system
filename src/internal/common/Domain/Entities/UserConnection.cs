@@ -10,4 +10,5 @@ public record UserConnection {
     public DateTimeOffset ConnectedAt { get; init; }
     public DateTimeOffset LastSeen    { get; init; }
     public QueueInfo      Queue       { get; init; } = QueueInfo.Empty;
+    public string        ServerName  { get; init; } = string.Empty;
 }

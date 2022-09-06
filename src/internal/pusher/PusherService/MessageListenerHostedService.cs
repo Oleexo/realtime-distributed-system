@@ -34,7 +34,7 @@ internal sealed class MessageListenerHostedService : IHostedService, IDisposable
         var response = await _orchestratorApi.RegisterPusher(new RegisterPusherRequest {
             Name = _configuration.Name
         });
-        _userManager.SetQueueInfo(new QueueInfo(response.QueueType, response.QueueName));
+        _userManager.SetQueueInfo(new QueueInfo(response.QueueType, response.QueueName), _configuration.Name);
         _brokerListener.Listen(response.QueueType, response.QueueName, ConsumeMessage);
         _timer = new Timer(KeepQueueSlotActivate, null, TimeSpan.FromSeconds(5),
                            TimeSpan.FromSeconds(30));
@@ -64,8 +64,8 @@ internal sealed class MessageListenerHostedService : IHostedService, IDisposable
         await _orchestratorApi.UnregisterPusher(request);
     }
 
-    private Task ConsumeMessage(MessageWrapper message) {
-        return _userManager.DispatchAsync(message);
+    private Task ConsumeMessage(Letter letter) {
+        return _userManager.DispatchAsync(letter);
     }
 
     public void Dispose() {

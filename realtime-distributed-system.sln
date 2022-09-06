@@ -22,6 +22,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_", "_", "{A8B9C0CC-41F9-4D7E-ABB4-3D82F665A9CC}"
 	ProjectSection(SolutionItems) = preProject
 		docker-compose.yml = docker-compose.yml
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "distributor", "distributor", "{A8F99970-4418-4C54-96BF-E1383D7A1CBE}"
@@ -94,6 +95,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrokerPusher", "src\interna
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrokerPusher.Sqs", "src\internal\distributor\BrokerPusher.Sqs\BrokerPusher.Sqs.csproj", "{9D604BD9-3928-4C1A-B352-F41360EA55FA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SnowflakeGen", "src\internal\distributor\SnowflakeGen\SnowflakeGen.csproj", "{DE0AF479-4939-4588-A637-88433887CC56}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -145,6 +148,7 @@ Global
 		{FF8F409A-5EA7-44FB-97FA-6B01EA7D8435} = {A8F99970-4418-4C54-96BF-E1383D7A1CBE}
 		{8D85329F-9446-4FFC-8D0F-422B03C9769B} = {A8F99970-4418-4C54-96BF-E1383D7A1CBE}
 		{9D604BD9-3928-4C1A-B352-F41360EA55FA} = {A8F99970-4418-4C54-96BF-E1383D7A1CBE}
+		{DE0AF479-4939-4588-A637-88433887CC56} = {A8F99970-4418-4C54-96BF-E1383D7A1CBE}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{31F8CD7B-0821-4674-A186-C2341BB89692}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -263,5 +267,9 @@ Global
 		{9D604BD9-3928-4C1A-B352-F41360EA55FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9D604BD9-3928-4C1A-B352-F41360EA55FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9D604BD9-3928-4C1A-B352-F41360EA55FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE0AF479-4939-4588-A637-88433887CC56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE0AF479-4939-4588-A637-88433887CC56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE0AF479-4939-4588-A637-88433887CC56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE0AF479-4939-4588-A637-88433887CC56}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -5,8 +5,8 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-        <ServerGarbageCollection>true</ServerGarbageCollection>
         <LangVersion>preview</LangVersion>
+        <ServerGarbageCollection>false</ServerGarbageCollection>
         <AssemblyName>Oleexo.RealtimeDistributedSystem.Orchestrator.Api</AssemblyName>
         <RootNamespace>Oleexo.RealtimeDistributedSystem.Orchestrator.Api</RootNamespace>
     </PropertyGroup>

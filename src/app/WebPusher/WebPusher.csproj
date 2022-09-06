@@ -1,10 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
-
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <AssemblyName>Oleexo.RealtimeDistributedSystem.WebPusher.Api</AssemblyName>
+        <RootNamespace>Oleexo.RealtimeDistributedSystem.WebPusher.Api</RootNamespace>
     </PropertyGroup>
 
 </Project>

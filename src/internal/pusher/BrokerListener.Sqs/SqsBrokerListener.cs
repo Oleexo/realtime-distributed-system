@@ -43,15 +43,17 @@ public sealed class SqsBrokerListener : BaseBrokerListener, IDisposable {
     }
 
     protected override void StartListen(string                     queueName,
-                                        Func<MessageWrapper, Task> messageHandler) {
+                                        Func<Letter, Task> messageHandler) {
         _stopping = new CancellationTokenSource();
         _pollingTask = Task.Run(async () => {
             try {
                 while (!_isStopping) {
+                    var queueUrl = queueName.Replace("localstack", "localhost");
                     var request = new ReceiveMessageRequest {
-                        QueueUrl          = queueName.Replace("localstack", "localhost"),
+                        QueueUrl          = queueUrl,
                         VisibilityTimeout = 30,
-                        WaitTimeSeconds   = 3
+                        WaitTimeSeconds   = 3,
+                        MaxNumberOfMessages = 10
                     };
                     var response = await _client.ReceiveMessageAsync(request, _stopping.Token);
                     _logger.LogDebug("Messages received {Count}", response.Messages.Count);
@@ -60,6 +62,8 @@ public sealed class SqsBrokerListener : BaseBrokerListener, IDisposable {
                         if (wrapper is not null) {
                             await messageHandler(wrapper);
                         }
+
+                        await _client.DeleteMessageAsync(queueName, message.ReceiptHandle);
                     }
                 }
             }

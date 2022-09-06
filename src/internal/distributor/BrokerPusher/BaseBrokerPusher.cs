@@ -7,13 +7,13 @@ namespace Oleexo.RealtimeDistributedSystem.Distributor.BrokerPusher;
 public abstract class BaseBrokerPusher : IBrokerPusher {
     public abstract QueueType Type { get; }
 
-    public Task PushMessageAsync(MessageWrapper    message,
+    public Task PushAsync(Letter    letter,
                                  QueueInfo         queue,
                                  CancellationToken cancellationToken = default) {
         if (queue.Type != Type) {
             throw new InvalidOperationException("The queue is not the supported by the current pusher");
         }
-        var json = JsonSerializer.Serialize(message);
+        var json = JsonSerializer.Serialize(letter);
         return SendMessageAsync(json, queue.Name, cancellationToken);
     }
 

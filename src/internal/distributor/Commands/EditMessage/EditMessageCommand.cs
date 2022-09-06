@@ -1,14 +1,11 @@
-﻿using System.Text.Json.Serialization;
+﻿using Oleexo.RealtimeDistributedSystem.Common.Commands;
 
-namespace Oleexo.RealtimeDistributedSystem.Distributor.Api.Models.Requests;
+namespace Oleexo.RealtimeDistributedSystem.Distributor.Commands.EditMessage;
 
-public record DispatchMessageRequest {
-    [JsonPropertyName("content")]
+public record EditMessageCommand : ICommand<long> {
     public string                      Content    { get; init; } = string.Empty;
-    [JsonPropertyName("recipients")]
     public IReadOnlyCollection<string> Recipients { get; init; } = new List<string>();
-    [JsonPropertyName("tag")]
     public string                      Tag        { get; init; } = string.Empty;
-    [JsonPropertyName("channel_id")]
     public string                      ChannelId  { get; init; } = string.Empty;
+    public long                        MessageId  { get; init; }
 }

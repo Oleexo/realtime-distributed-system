@@ -98,6 +98,7 @@ internal class UserConnectionRepository : BaseRepository<UserConnection>, IUserC
             { "last_seen", entity.LastSeen.ToString("O", CultureInfo.InvariantCulture) },
             { "queue_type", entity.Queue.Type.ToString() },
             { "queue_name", entity.Queue.Name },
+            { "server_name", entity.ServerName },
             { "ttl", ttl }
         };
     }

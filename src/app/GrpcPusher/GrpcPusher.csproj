@@ -5,20 +5,18 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-        <ServerGarbageCollection>true</ServerGarbageCollection>
         <LangVersion>preview</LangVersion>
+        <ServerGarbageCollection>false</ServerGarbageCollection>
         <AssemblyName>Oleexo.RealtimeDistributedSystem.GrpcPusher.Api</AssemblyName>
         <RootNamespace>Oleexo.RealtimeDistributedSystem.GrpcPusher.Api</RootNamespace>
-
     </PropertyGroup>
 
     <ItemGroup>
-        <Protobuf Include="Protos\greet.proto" GrpcServices="Server" />
         <Protobuf Include="Protos\message.proto" GrpcServices="Server" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Grpc.AspNetCore" Version="2.45.0" />
+        <PackageReference Include="Grpc.AspNetCore" Version="2.48.0" />
     </ItemGroup>
 
     <ItemGroup>

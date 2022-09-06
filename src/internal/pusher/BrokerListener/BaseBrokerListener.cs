@@ -9,7 +9,7 @@ public abstract class BaseBrokerListener : IBrokerListener {
 
     public void Listen(QueueType                  queueType,
                        string                     queueName,
-                       Func<MessageWrapper, Task> messageHandler) {
+                       Func<Letter, Task> messageHandler) {
         if (queueType != Type) {
             throw new InvalidOperationException("Invalid queue type");
         }
@@ -20,9 +20,9 @@ public abstract class BaseBrokerListener : IBrokerListener {
     public abstract Task StopAsync();
 
     protected abstract void StartListen(string                     queueName,
-                                        Func<MessageWrapper, Task> messageHandler);
+                                        Func<Letter, Task> messageHandler);
 
-    protected MessageWrapper? DeserializeMessage(string payload) {
-        return JsonSerializer.Deserialize<MessageWrapper>(payload);
+    protected Letter? DeserializeMessage(string payload) {
+        return JsonSerializer.Deserialize<Letter>(payload);
     }
 }

@@ -15,9 +15,9 @@ services:
       resources:
         limits:
           cpus: '0.2'
-          memory: 50m
+          memory: 200m
         reservations:
-          memory: 25m
+          memory: 50m
     healthcheck:
       test: curl --fail http://localhost:8000/healthz/ready || exit 1
       interval: 60s
@@ -40,9 +40,9 @@ services:
       resources:
         limits:
           cpus: '0.2'
-          memory: 50m
+          memory: 200m
         reservations:
-          memory: 25m
+          memory: 50m
     healthcheck:
       test: curl --fail http://localhost:8000/healthz/ready || exit 1
       interval: 60s
@@ -64,9 +64,9 @@ services:
       resources:
         limits:
           cpus: '0.2'
-          memory: 50m
+          memory: 200m
         reservations:
-          memory: 25m
+          memory: 50m
     healthcheck:
       test: curl --fail http://localhost:8000/healthz/ready || exit 1
       interval: 60s

@@ -9,19 +9,22 @@ internal class ConnectionInfo {
                           ConnectionId        connectionId,
                           ChannelFilter       filter,
                           DateTimeOffset      connectedAt,
-                          Func<Message, Task> handler) {
-        Id          = connectionId;
-        UserId      = userId;
-        DeviceId    = deviceId;
-        Filter      = filter;
-        ConnectedAt = connectedAt;
-        Handler     = handler;
+                          Func<Message, Task> messageHandler,
+                          Func<Event, Task>   eventHandler) {
+        Id             = connectionId;
+        UserId         = userId;
+        DeviceId       = deviceId;
+        Filter         = filter;
+        ConnectedAt    = connectedAt;
+        MessageHandler = messageHandler;
+        EventHandler   = eventHandler;
     }
 
-    public ConnectionId        Id          { get; }
-    public string              UserId      { get; }
-    public string              DeviceId    { get; }
-    public ChannelFilter       Filter      { get; }
-    public DateTimeOffset      ConnectedAt { get; }
-    public Func<Message, Task> Handler     { get; }
+    public ConnectionId        Id             { get; }
+    public string              UserId         { get; }
+    public string              DeviceId       { get; }
+    public ChannelFilter       Filter         { get; }
+    public DateTimeOffset      ConnectedAt    { get; }
+    public Func<Message, Task> MessageHandler { get; }
+    public Func<Event, Task>   EventHandler   { get; }
 }

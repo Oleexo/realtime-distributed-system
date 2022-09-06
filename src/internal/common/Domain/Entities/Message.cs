@@ -11,9 +11,7 @@ public record Message {
 
     [JsonPropertyName("content")]
     public string Content { get; init; } = string.Empty;
-}
 
-public record Event {
-    [JsonPropertyName("content")]
-    public string Content { get; init; } = string.Empty;
+    [JsonPropertyName("parent_id")]
+    public long? ParentId { get; init; }
 }

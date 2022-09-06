@@ -16,6 +16,18 @@ message ListenRequest {
   string device_id = 2;
 }
 
+message MessageReply {
+  int64 id = 1;
+  string content = 2;
+  string channel_id = 3;
+}
+message EventReply {
+  string content = 1;
+}
+
 message ListenReply {
-  string message = 1;
+  oneof content {
+    MessageReply message = 1;
+    EventReply event = 2;
+  }
 }

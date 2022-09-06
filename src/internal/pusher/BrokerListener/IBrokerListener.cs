@@ -6,7 +6,7 @@ namespace Oleexo.RealtimeDistributedSystem.Pusher.BrokerListener;
 public interface IBrokerListener {
     void Listen(QueueType                  queueType,
                 string                     queueName,
-                Func<MessageWrapper, Task> messageHandler);
+                Func<Letter, Task> messageHandler);
 
     Task StopAsync();
 }

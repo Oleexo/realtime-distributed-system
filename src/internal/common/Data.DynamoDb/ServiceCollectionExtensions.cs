@@ -9,6 +9,7 @@ public static class ServiceCollectionExtensions {
                                                             IConfiguration          configuration) {
         return services.Configure<DynamoDbOptions>(configuration.GetSection("Aws"))
                        .AddSingleton<IDynamoDbContext, DynamoDbClient>()
-                       .AddScoped<IStartupTask, DatabaseCreatorTask>();
+                       .AddScoped<IStartupTask, RealtimeTableTask>()
+                       .AddScoped<IStartupTask, MessageTableTask>();
     }
 }

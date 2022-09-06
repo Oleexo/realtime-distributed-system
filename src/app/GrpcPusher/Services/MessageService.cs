@@ -1,7 +1,9 @@
 using Grpc.Core;
+using Oleexo.RealtimeDistributedSystem.Common.Domain.Entities;
 using Oleexo.RealtimeDistributedSystem.Grpc.Pusher.Message;
 using Oleexo.RealtimeDistributedSystem.Pusher.UserManager;
 using ChannelFilter = Oleexo.RealtimeDistributedSystem.Common.Domain.ValueObjects.ChannelFilter;
+using Message = Oleexo.RealtimeDistributedSystem.Grpc.Pusher.Message.Message;
 
 namespace Oleexo.RealtimeDistributedSystem.GrpcPusher.Api.Services;
 
@@ -20,7 +22,29 @@ internal class MessageService : Message.MessageBase {
                                      CancellationToken                                               cancellationToken = default) {
         try {
             var reply = new ListenReply {
-                Message = message.Content
+                Message = new MessageReply {
+                    Content   = message.Content,
+                    Id        = message.Id,
+                    ChannelId = message.ChannelId
+                }
+            };
+            await responseStream.WriteAsync(reply, cancellationToken);
+        }
+        catch (OperationCanceledException ex) when (ex.CancellationToken == cancellationToken) {
+        }
+        catch (Exception e) {
+            _logger.LogError(e, "Cannot dispatch message to client");
+        }
+    }
+
+    private async Task HandleEvent(IServerStreamWriter<ListenReply> responseStream,
+                                   Common.Domain.Entities.Event     @event,
+                                   CancellationToken                cancellationToken = default) {
+        try {
+            var reply = new ListenReply {
+                Event = new EventReply {
+                    Content = @event.Content
+                }
             };
             await responseStream.WriteAsync(reply, cancellationToken);
         }
@@ -39,12 +63,15 @@ internal class MessageService : Message.MessageBase {
             return;
         }
 
+        // todo limit tags to 10
+        var filter = new ChannelFilter {
+            Tags = request.Filter.Tags.ToArray()
+        };
         var connectionId = await _userManager.ConnectAsync(userId,
                                                            request.DeviceId,
-                                                           new ChannelFilter {
-                                                               Tags = request.Filter.Tags.ToArray()
-                                                           },
-                                                           m => HandleMessage(responseStream, m, context.CancellationToken));
+                                                           filter,
+                                                           m => HandleMessage(responseStream, m, context.CancellationToken),
+                                                           m => HandleEvent(responseStream, m, context.CancellationToken));
         if (connectionId is null) {
             return;
         }

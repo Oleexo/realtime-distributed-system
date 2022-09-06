@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using Distributor.Models.Requests;
-using Distributor.Models.Responses;
+using Oleexo.RealtimeDistributedSystem.Distributor.Api.Models.Requests;
+using Oleexo.RealtimeDistributedSystem.Distributor.Api.Models.Responses;
 using Oleexo.RealtimeDistributedSystem.Distributor.Commands.DispatchMessage;
 
-namespace Distributor.Models.Mappings; 
+namespace Oleexo.RealtimeDistributedSystem.Distributor.Api.Models.Mappings; 
 
-public class DispatchMessageMapping : Profile {
+public sealed class DispatchMessageMapping : Profile {
     public DispatchMessageMapping() {
         CreateMap<DispatchMessageRequest, DispatchMessageCommand>();
         CreateMap<long, DispatchMessageResponse>()

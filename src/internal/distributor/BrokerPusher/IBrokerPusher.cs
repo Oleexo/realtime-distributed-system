@@ -5,7 +5,7 @@ namespace Oleexo.RealtimeDistributedSystem.Distributor.BrokerPusher;
 
 public interface IBrokerPusher {
     public QueueType Type { get; }
-    public Task PushMessageAsync(MessageWrapper    message,
+    public Task PushAsync(Letter    letter,
                                  QueueInfo         queue,
                                  CancellationToken cancellationToken = default);
 }

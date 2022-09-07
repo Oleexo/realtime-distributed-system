@@ -15,9 +15,15 @@ builder.Services.AddDynamoDbPersistence(builder.Configuration);
 builder.Services.AddCommonRepositories();
 builder.Services.AddUserPresenceHealthCheck();
 builder.Services.AddOrchestratorApi(builder.Configuration);
+if (builder.Environment.IsDevelopment()) {
+    builder.Services.AddGrpcReflection();
+}
 
 var app = builder.Build();
 
+if (app.Environment.IsDevelopment()) {
+    app.MapGrpcReflectionService();
+}
 app.MapGrpcService<MessageService>();
 app.MapGet("/",
            () =>

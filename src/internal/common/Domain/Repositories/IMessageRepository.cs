@@ -6,6 +6,7 @@ public interface IMessageRepository {
     Task CreateAsync(Message           message,
                      CancellationToken cancellationToken = default);
 
-    Task<Message?> GetByIdAsync(string channelId,
-                                long   messageId);
+    Task<Message?> GetByIdAsync(string            channelId,
+                                long              messageId,
+                                CancellationToken cancellationToken = default);
 }

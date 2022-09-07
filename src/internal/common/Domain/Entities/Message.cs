@@ -14,4 +14,7 @@ public record Message {
 
     [JsonPropertyName("parent_id")]
     public long? ParentId { get; init; }
+    
+    [JsonPropertyName("is_deletion")]
+    public bool? IsDeletion { get; init; }
 }

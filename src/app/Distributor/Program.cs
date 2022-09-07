@@ -5,8 +5,10 @@ using Oleexo.RealtimeDistributedSystem.Distributor.Api.Models.Mappings;
 using Oleexo.RealtimeDistributedSystem.Distributor.Api.Models.Requests;
 using Oleexo.RealtimeDistributedSystem.Distributor.Api.Models.Responses;
 using Oleexo.RealtimeDistributedSystem.Distributor.BrokerPusher.Sqs;
+using Oleexo.RealtimeDistributedSystem.Distributor.Commands.DeleteMessage;
 using Oleexo.RealtimeDistributedSystem.Distributor.Commands.DispatchEvent;
 using Oleexo.RealtimeDistributedSystem.Distributor.Commands.DispatchMessage;
+using Oleexo.RealtimeDistributedSystem.Distributor.Commands.EditMessage;
 using Oleexo.RealtimeDistributedSystem.Distributor.SnowflakeGen;
 using static Oleexo.RealtimeDistributedSystem.Common.AspNetCoreHelpers.HttpHelpers;
 
@@ -24,7 +26,7 @@ app.MapPost("/message", RunCommandAsync<DispatchMessageRequest, DispatchMessageR
 // Post an event
 app.MapPost("/event", RunCommandAsync<DispatchEventRequest, DispatchEventCommand>);
 // Edit message
-app.MapPut("/message/:channel/:messageId", () => "Hello world");
+app.MapPut("/message", RunCommandAsync<EditMessageRequest, EditMessageResponse, EditMessageCommand, long>);
 // Delete message
-app.MapDelete("/message/:channel/:messageId", () => "Hello world");
+app.MapDelete("/message", RunCommandAsync<DeleteMessageRequest, DeleteMessageResponse, DeleteMessageCommand, long>);
 app.Run();

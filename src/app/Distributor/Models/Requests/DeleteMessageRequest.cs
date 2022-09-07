@@ -2,9 +2,7 @@
 
 namespace Oleexo.RealtimeDistributedSystem.Distributor.Api.Models.Requests;
 
-public record EditMessageRequest {
-    [JsonPropertyName("content")]
-    public string Content { get; init; } = string.Empty;
+public record DeleteMessageRequest {
     [JsonPropertyName("recipients")]
     public IReadOnlyCollection<string> Recipients { get; init; } = new List<string>();
     [JsonPropertyName("tag")]

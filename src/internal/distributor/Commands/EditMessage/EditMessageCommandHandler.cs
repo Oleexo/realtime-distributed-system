@@ -27,13 +27,17 @@ public sealed class EditMessageCommandHandler : BaseDispatch, ICommandHandler<Ed
             return new InvalidOperationException("Message not found");
         }
 
-        var editMessage = message with {
+        if (message.ParentId.HasValue) {
+            return new InvalidOperationException("Cannot edit a edition");
+        }
+
+        var editionMessage = message with {
             Content = request.Content,
             Id = _snowflakeGen.GetNewSnowflakeId(),
             ParentId = message.Id
         };
-        await _messageRepository.CreateAsync(editMessage, cancellationToken);
-        await DispatchToConnectedUsersAsync(request.Recipients, request.Tag, editMessage, cancellationToken);
-        return editMessage.Id;
+        await _messageRepository.CreateAsync(editionMessage, cancellationToken);
+        await DispatchToConnectedUsersAsync(request.Recipients, request.Tag, editionMessage, cancellationToken);
+        return editionMessage.Id;
     }
 }

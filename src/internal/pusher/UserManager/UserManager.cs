@@ -124,7 +124,8 @@ internal class UserManager : IUserManager {
         var       userConnectionRepository = GetUserConnectionRepository(scope);
 
         foreach (var info in _connections.Values) {
-            await userConnectionRepository.DeleteAsync(info.Id.Value, cancellationToken);
+            // ignore cancellation token
+            await userConnectionRepository.DeleteAsync(info.Id.Value);
         }
     }
 }

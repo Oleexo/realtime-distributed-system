@@ -2,7 +2,7 @@
 
 namespace Oleexo.RealtimeDistributedSystem.Distributor.Api.Models.Responses;
 
-public record DispatchMessageResponse {
+public record EditMessageResponse {
     [JsonPropertyName("message_id")]
     public long MessageId { get; init; }
 }

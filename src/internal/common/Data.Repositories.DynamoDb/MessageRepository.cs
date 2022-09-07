@@ -17,9 +17,10 @@ internal sealed class MessageRepository : BaseRepository<Message>, IMessageRepos
         return PutEntryAsync(ToFields(message), cancellationToken: cancellationToken);
     }
 
-    public Task<Message?> GetByIdAsync(string channelId,
-                                       long   messageId) {
-        return ReadSingleEntryAsync($"Channel#{channelId}", $"Message#{messageId}", FromFields);
+    public Task<Message?> GetByIdAsync(string            channelId,
+                                       long              messageId,
+                                       CancellationToken cancellationToken = default) {
+        return ReadSingleEntryAsync($"Channel#{channelId}", $"Message#{messageId}", FromFields, cancellationToken);
     }
 
     private static Message FromFields(Dictionary<string, AttributeValue> fields) {
@@ -30,7 +31,14 @@ internal sealed class MessageRepository : BaseRepository<Message>, IMessageRepos
                                .N),
             ChannelId = fields["channel_id"]
                .S,
-            ParentId = fields.ContainsKey("parent_id") ? long.Parse(fields["parent_id"].N) : null
+            ParentId = fields.ContainsKey("parent_id")
+                           ? long.Parse(fields["parent_id"]
+                                           .N)
+                           : null,
+            IsDeletion = fields.ContainsKey("is_deletion")
+                             ? fields["is_deletion"]
+                                .BOOL
+                             : null
         };
     }
 
@@ -44,6 +52,10 @@ internal sealed class MessageRepository : BaseRepository<Message>, IMessageRepos
         };
         if (message.ParentId.HasValue) {
             fields.Add("parent_id", new AttributeValue { N = message.ParentId.Value.ToString() });
+        }
+
+        if (message.IsDeletion.HasValue) {
+            fields.Add("is_deletion", new AttributeValue { BOOL = message.IsDeletion.Value });
         }
 
         return fields;

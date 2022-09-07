@@ -10,7 +10,6 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\common\Common\Common.csproj" />
-        <ProjectReference Include="..\..\common\DomainDrivenDesign\DomainDrivenDesign.csproj" />
         <ProjectReference Include="..\..\common\Domain\Domain.csproj" />
     </ItemGroup>
 

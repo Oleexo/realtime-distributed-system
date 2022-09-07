@@ -1,28 +1,23 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
-        <Nullable>enable</Nullable>
-        <ImplicitUsings>enable</ImplicitUsings>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-        <LangVersion>preview</LangVersion>
-        <ServerGarbageCollection>false</ServerGarbageCollection>
-        <AssemblyName>Oleexo.RealtimeDistributedSystem.GrpcPusher.Api</AssemblyName>
-        <RootNamespace>Oleexo.RealtimeDistributedSystem.GrpcPusher.Api</RootNamespace>
+        <AssemblyName>$(BaseName).GrpcPusher.Api</AssemblyName>
+        <RootNamespace>$(BaseName).GrpcPusher.Api</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
-        <Protobuf Include="Protos\message.proto" GrpcServices="Server" />
+        <Protobuf Include="Protos\message.proto" GrpcServices="Server"/>
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Grpc.AspNetCore" Version="2.48.0" />
-        <PackageReference Include="Grpc.AspNetCore.Server.Reflection" Version="2.48.0" />
+        <PackageReference Include="Grpc.AspNetCore" Version="2.48.0"/>
+        <PackageReference Include="Grpc.AspNetCore.Server.Reflection" Version="2.48.0"/>
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\internal\common\Data.Repositories.DynamoDb\Data.Repositories.DynamoDb.csproj" />
-        <ProjectReference Include="..\..\internal\pusher\PusherService\PusherService.csproj" />
+        <ProjectReference Include="..\..\internal\common\Data.Repositories.DynamoDb\Data.Repositories.DynamoDb.csproj"/>
+        <ProjectReference Include="..\..\internal\pusher\PusherService\PusherService.csproj"/>
     </ItemGroup>
 
 </Project>

@@ -1,11 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
-        <RootNamespace>Oleexo.RealtimeDistributedSystem.Common.Commands</RootNamespace>
-        <AssemblyName>Oleexo.RealtimeDistributedSystem.Common.Commands</AssemblyName>
+        <RootNamespace>$(BaseName).Common.Commands</RootNamespace>
+        <AssemblyName>$(BaseName).Common.Commands</AssemblyName>
     </PropertyGroup>
 
     <ItemGroup>

@@ -1,12 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
-        <RootNamespace>Oleexo.RealtimeDistributedSystem.Common.AspNetCoreHelpers</RootNamespace>
-        <AssemblyName>Oleexo.RealtimeDistributedSystem.Common.AspNetCoreHelpers</AssemblyName>
-
+        <RootNamespace>$(BaseName).Common.AspNetCoreHelpers</RootNamespace>
+        <AssemblyName>$(BaseName).Common.AspNetCoreHelpers</AssemblyName>
     </PropertyGroup>
     <ItemGroup>
         <FrameworkReference Include="Microsoft.AspNetCore.App" />

@@ -1,11 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
-        <RootNamespace>Oleexo.RealtimeDistributedSystem.Common.Queries</RootNamespace>
-        <AssemblyName>Oleexo.RealtimeDistributedSystem.Common.Queries</AssemblyName>
+        <RootNamespace>$(BaseName).Common.Queries</RootNamespace>
+        <AssemblyName>$(BaseName).Common.Queries</AssemblyName>
     </PropertyGroup>
 
     <ItemGroup>

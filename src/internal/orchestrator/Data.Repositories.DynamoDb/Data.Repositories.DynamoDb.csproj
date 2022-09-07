@@ -1,11 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
-        <RootNamespace>Oleexo.RealtimeDistributedSystem.Orchestrator.Data.Repositories.DynamoDb</RootNamespace>
-        <AssemblyName>Oleexo.RealtimeDistributedSystem.Orchestrator.Data.Repositories.DynamoDb</AssemblyName>
+        <RootNamespace>$(BaseName).Orchestrator.Data.Repositories.DynamoDb</RootNamespace>
+        <AssemblyName>$(BaseName).Orchestrator.Data.Repositories.DynamoDb</AssemblyName>
 
     </PropertyGroup>
 

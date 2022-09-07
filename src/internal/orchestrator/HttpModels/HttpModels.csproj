@@ -1,11 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
-        <RootNamespace>Oleexo.RealtimeDistributedSystem.Orchestrator.HttpModels</RootNamespace>
-        <AssemblyName>Oleexo.RealtimeDistributedSystem.Orchestrator.HttpModels</AssemblyName>
+        <RootNamespace>$(BaseName).Orchestrator.HttpModels</RootNamespace>
+        <AssemblyName>$(BaseName).Orchestrator.HttpModels</AssemblyName>
     </PropertyGroup>
 
     <ItemGroup>

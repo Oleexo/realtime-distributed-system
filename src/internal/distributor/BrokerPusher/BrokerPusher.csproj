@@ -1,11 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
-        <RootNamespace>Oleexo.RealtimeDistributedSystem.Distributor.BrokerPusher</RootNamespace>
-        <AssemblyName>Oleexo.RealtimeDistributedSystem.Distributor.BrokerPusher</AssemblyName>
+        <RootNamespace>$(BaseName).Distributor.BrokerPusher</RootNamespace>
+        <AssemblyName>$(BaseName).Distributor.BrokerPusher</AssemblyName>
     </PropertyGroup>
 
     <ItemGroup>

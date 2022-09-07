@@ -1,11 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
-        <RootNamespace>Oleexo.RealtimeDistributedSystem.Pusher.UserManager</RootNamespace>
-        <AssemblyName>Oleexo.RealtimeDistributedSystem.Pusher.UserManager</AssemblyName>
+        <RootNamespace>$(BaseName).Pusher.UserManager</RootNamespace>
+        <AssemblyName>$(BaseName).Pusher.UserManager</AssemblyName>
     </PropertyGroup>
 
     <ItemGroup>

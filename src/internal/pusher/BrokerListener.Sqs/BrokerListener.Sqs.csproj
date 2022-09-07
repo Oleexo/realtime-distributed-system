@@ -1,11 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
-        <RootNamespace>Oleexo.RealtimeDistributedSystem.Pusher.BrokerListener.AmazonSqs</RootNamespace>
-        <AssemblyName>Oleexo.RealtimeDistributedSystem.Pusher.BrokerListener.AmazonSqs</AssemblyName>
+        <RootNamespace>$(BaseName).Pusher.BrokerListener.AmazonSqs</RootNamespace>
+        <AssemblyName>$(BaseName).Pusher.BrokerListener.AmazonSqs</AssemblyName>
 
     </PropertyGroup>
 

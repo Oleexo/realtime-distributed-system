@@ -1,11 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
-        <RootNamespace>Oleexo.RealtimeDistributedSystem.Common.Domain.ValueObjects</RootNamespace>
-        <AssemblyName>Oleexo.RealtimeDistributedSystem.Common.Domain.ValueObjects</AssemblyName>
+        <RootNamespace>$(BaseName).Common.Domain.ValueObjects</RootNamespace>
+        <AssemblyName>$(BaseName).Common.Domain.ValueObjects</AssemblyName>
 
     </PropertyGroup>
 

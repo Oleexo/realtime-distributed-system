@@ -3,6 +3,7 @@
 namespace Oleexo.RealtimeDistributedSystem.Common.Domain.Entities;
 
 public record Message {
+    public static Message Empty => new Message();
     [JsonPropertyName("id")]
     public long Id { get; init; }
 

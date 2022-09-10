@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using Oleexo.RealtimeDistributedSystem.Distributor.Api.Models.Requests;
-using Oleexo.RealtimeDistributedSystem.Distributor.Api.Models.Responses;
-using Oleexo.RealtimeDistributedSystem.Distributor.Commands.DeleteMessage;
+using Oleexo.RealtimeDistributedSystem.Store.Api.Models.Requests;
+using Oleexo.RealtimeDistributedSystem.Store.Api.Models.Responses;
+using Oleexo.RealtimeDistributedSystem.Store.Commands.DeleteMessage;
 
-namespace Oleexo.RealtimeDistributedSystem.Distributor.Api.Models.Mappings;
+namespace Oleexo.RealtimeDistributedSystem.Store.Api.Models.Mappings;
 
 public sealed class DeleteMessageMapping : Profile {
     public DeleteMessageMapping() {

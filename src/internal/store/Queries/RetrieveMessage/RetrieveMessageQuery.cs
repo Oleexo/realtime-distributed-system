@@ -1,7 +1,7 @@
 ﻿using Oleexo.RealtimeDistributedSystem.Common.Domain.Entities;
 using Oleexo.RealtimeDistributedSystem.Common.Queries;
 
-namespace Oleexo.RealtimeDistributedSystem.Store.Queries.GetMessage;
+namespace Oleexo.RealtimeDistributedSystem.Store.Queries.RetrieveMessage;
 
 public record RetrieveMessageQuery : IQuery<Message> {
     public long   MessageId { get; init; }

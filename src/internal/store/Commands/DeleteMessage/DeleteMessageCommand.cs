@@ -1,6 +1,6 @@
 ﻿using Oleexo.RealtimeDistributedSystem.Common.Commands;
 
-namespace Oleexo.RealtimeDistributedSystem.Distributor.Commands.DeleteMessage;
+namespace Oleexo.RealtimeDistributedSystem.Store.Commands.DeleteMessage;
 
 public record DeleteMessageCommand : ICommand<long> {
     public long                        MessageId  { get; init; }

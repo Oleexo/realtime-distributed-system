@@ -10,6 +10,7 @@
       <ProjectReference Include="..\..\internal\common\AspNetCoreHelpers\AspNetCoreHelpers.csproj" />
       <ProjectReference Include="..\..\internal\common\Data.DynamoDb\Data.DynamoDb.csproj" />
       <ProjectReference Include="..\..\internal\common\Data.Repositories.DynamoDb\Data.Repositories.DynamoDb.csproj" />
+      <ProjectReference Include="..\..\internal\store\Commands\Commands.csproj" />
       <ProjectReference Include="..\..\internal\store\Queries\Queries.csproj" />
     </ItemGroup>
 

@@ -1,21 +1,16 @@
 ﻿using Oleexo.RealtimeDistributedSystem.Common.Commands;
 using Oleexo.RealtimeDistributedSystem.Common.Domain.Repositories;
 using Oleexo.RealtimeDistributedSystem.Common.Monads;
-using Oleexo.RealtimeDistributedSystem.Distributor.BrokerPusher;
-using Oleexo.RealtimeDistributedSystem.Distributor.Commands.Common;
-using Oleexo.RealtimeDistributedSystem.Distributor.SnowflakeGen;
+using Oleexo.RealtimeDistributedSystem.Store.SnowflakeGen;
 
-namespace Oleexo.RealtimeDistributedSystem.Distributor.Commands.DeleteMessage;
+namespace Oleexo.RealtimeDistributedSystem.Store.Commands.DeleteMessage;
 
-public sealed class DeleteMessageCommandHandler : BaseDispatch, ICommandHandler<DeleteMessageCommand, long> {
+public sealed class DeleteMessageCommandHandler : ICommandHandler<DeleteMessageCommand, long> {
     private readonly IMessageRepository _messageRepository;
     private readonly ISnowflakeGen      _snowflakeGen;
 
-    public DeleteMessageCommandHandler(IMessageRepository        messageRepository,
-                                       ISnowflakeGen             snowflakeGen,
-                                       IBrokerPusher             brokerPusher,
-                                       IUserConnectionRepository userConnectionRepository)
-        : base(brokerPusher, userConnectionRepository) {
+    public DeleteMessageCommandHandler(IMessageRepository messageRepository,
+                                       ISnowflakeGen      snowflakeGen) {
         _messageRepository = messageRepository;
         _snowflakeGen      = snowflakeGen;
     }
@@ -30,6 +25,7 @@ public sealed class DeleteMessageCommandHandler : BaseDispatch, ICommandHandler<
         if (message.ParentId.HasValue) {
             return new InvalidOperationException("Cannot delete a edition");
         }
+
         var deletionMessage = message with {
             Content = string.Empty,
             Id = _snowflakeGen.GetNewSnowflakeId(),
@@ -37,8 +33,6 @@ public sealed class DeleteMessageCommandHandler : BaseDispatch, ICommandHandler<
             IsDeletion = true
         };
         await _messageRepository.CreateAsync(deletionMessage, cancellationToken);
-        await DispatchToConnectedUsersAsync(request.Recipients, request.Tag, deletionMessage, cancellationToken);
         return deletionMessage.Id;
-
     }
 }

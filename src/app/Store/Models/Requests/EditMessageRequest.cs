@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Oleexo.RealtimeDistributedSystem.Distributor.Api.Models.Requests;
+namespace Oleexo.RealtimeDistributedSystem.Store.Api.Models.Requests;
 
 public record EditMessageRequest {
     [JsonPropertyName("content")]

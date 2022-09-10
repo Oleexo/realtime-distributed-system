@@ -1,11 +1,10 @@
-﻿using MediatR.Pipeline;
-using Oleexo.RealtimeDistributedSystem.Common.Commands;
+﻿using Oleexo.RealtimeDistributedSystem.Common.Commands;
+using Oleexo.RealtimeDistributedSystem.Common.Domain.Entities;
 
 namespace Oleexo.RealtimeDistributedSystem.Distributor.Commands.DispatchMessage;
 
-public record DispatchMessageCommand : ICommand<long> {
-    public string                      ChannelId  { get; init; } = string.Empty;
-    public string                      Content    { get; init; } = string.Empty;
+public record DispatchMessageCommand : ICommand {
+    public Message                     Message    { get; init; } = Message.Empty;
     public IReadOnlyCollection<string> Recipients { get; init; } = new List<string>();
     public string                      Tag        { get; init; } = string.Empty;
 }

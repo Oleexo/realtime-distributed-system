@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Oleexo.RealtimeDistributedSystem.Distributor.Api.Models.Responses;
+namespace Oleexo.RealtimeDistributedSystem.Store.Api.Models.Responses;
 
 public record EditMessageResponse {
     [JsonPropertyName("message_id")]

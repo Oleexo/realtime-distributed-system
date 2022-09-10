@@ -3,7 +3,7 @@ using Oleexo.RealtimeDistributedSystem.Common.Domain.Repositories;
 using Oleexo.RealtimeDistributedSystem.Common.Monads;
 using Oleexo.RealtimeDistributedSystem.Common.Queries;
 
-namespace Oleexo.RealtimeDistributedSystem.Store.Queries.GetMessage;
+namespace Oleexo.RealtimeDistributedSystem.Store.Queries.RetrieveMessage;
 
 public sealed class RetrieveMessageQueryHandler : IQueryHandler<RetrieveMessageQuery, Message?> {
     private readonly IMessageRepository _messageRepository;

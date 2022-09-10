@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Oleexo.RealtimeDistributedSystem.Store.Api.Models.Requests;
-using Oleexo.RealtimeDistributedSystem.Store.Queries.GetMessage;
+using Oleexo.RealtimeDistributedSystem.Store.Queries.RetrieveMessage;
 
 namespace Oleexo.RealtimeDistributedSystem.Store.Api.Models.Mappings;
 

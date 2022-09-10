@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <RootNamespace>$(BaseName).Distributor.SnowflakeGen</RootNamespace>
-        <AssemblyName>$(BaseName).Distributor.SnowflakeGen</AssemblyName>
+        <RootNamespace>$(BaseName).Store.SnowflakeGen</RootNamespace>
+        <AssemblyName>$(BaseName).Store.SnowflakeGen</AssemblyName>
 
     </PropertyGroup>
 

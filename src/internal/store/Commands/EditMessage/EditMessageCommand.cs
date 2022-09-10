@@ -1,6 +1,6 @@
 ﻿using Oleexo.RealtimeDistributedSystem.Common.Commands;
 
-namespace Oleexo.RealtimeDistributedSystem.Distributor.Commands.EditMessage;
+namespace Oleexo.RealtimeDistributedSystem.Store.Commands.EditMessage;
 
 public record EditMessageCommand : ICommand<long> {
     public string                      Content    { get; init; } = string.Empty;

@@ -9,4 +9,17 @@ public interface IMessageRepository {
     Task<Message?> GetByIdAsync(string            channelId,
                                 long              messageId,
                                 CancellationToken cancellationToken = default);
+
+    Task<IReadOnlyCollection<Message>> GetAllAsync(string channelId,
+                                                   GetAllOptions options, 
+                                                   CancellationToken cancellationToken = default);
+    Task<IReadOnlyCollection<Message>> GetAllAsync(string            channelId,
+                                                   CancellationToken cancellationToken = default);
+}
+
+public record GetAllOptions {
+    public int  Limit       { get; init; } = 100;
+    public long Offset      { get; init; } = 0;
+    public bool ScanForward { get; init; } = false;
+    public bool EventStyle  { get; init; } = true;
 }

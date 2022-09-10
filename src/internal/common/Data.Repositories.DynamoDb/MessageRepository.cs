@@ -23,6 +23,17 @@ internal sealed class MessageRepository : BaseRepository<Message>, IMessageRepos
         return ReadSingleEntryAsync($"Channel#{channelId}", $"Message#{messageId}", FromFields, cancellationToken);
     }
 
+    public Task<IReadOnlyCollection<Message>> GetAllAsync(string            channelId,
+                                                          GetAllOptions     options,
+                                                          CancellationToken cancellationToken = default) {
+        throw new NotImplementedException();
+    }
+
+    public Task<IReadOnlyCollection<Message>> GetAllAsync(string            channelId,
+                                                          CancellationToken cancellationToken = default) {
+        return GetAllAsync(channelId, new GetAllOptions(), cancellationToken);
+    }
+
     private static Message FromFields(Dictionary<string, AttributeValue> fields) {
         return new Message {
             Content = fields["content"]

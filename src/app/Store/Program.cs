@@ -17,7 +17,7 @@ builder.Services.AddAutoMapper(typeof(GetMessageMapping));
 
 var app     = builder.Build();
 
-app.MapGet("/message", RunQueryAsync<GetMessageRequest, GetMessageResponse, RetrieveMessageQuery, Message>);
+app.MapGet("/message", RunQueryAsync<GetMessageRequest, MessageResponse, RetrieveMessageQuery, Message>);
 app.MapGcCollectDebug();
 
 app.Run();

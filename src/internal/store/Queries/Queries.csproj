@@ -10,8 +10,4 @@
       <ProjectReference Include="..\..\common\Queries\Queries.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="GetMessages" />
-    </ItemGroup>
-
 </Project>

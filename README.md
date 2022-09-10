@@ -34,7 +34,9 @@ By default, all clients listen the Global tag.
 - Key-column database (DynamoDB, Cassandra)
 
 ## todo
-- [ ] Get message from channel_id
-- [ ] Edit a message
-- [ ] Remove a message
+- [x] Get message from channel_id
+- [ ] Get messages from channel_id
+- [x] Edit a message
+- [x] Remove a message
 - [ ] Handle snowflake id unique ID for each distributor
+- [ ] Handle asynchronous message/event distribution

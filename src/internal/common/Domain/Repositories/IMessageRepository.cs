@@ -10,9 +10,10 @@ public interface IMessageRepository {
                                 long              messageId,
                                 CancellationToken cancellationToken = default);
 
-    Task<IReadOnlyCollection<Message>> GetAllAsync(string channelId,
-                                                   GetAllOptions options, 
+    Task<IReadOnlyCollection<Message>> GetAllAsync(string            channelId,
+                                                   GetAllOptions     options,
                                                    CancellationToken cancellationToken = default);
+
     Task<IReadOnlyCollection<Message>> GetAllAsync(string            channelId,
                                                    CancellationToken cancellationToken = default);
 }

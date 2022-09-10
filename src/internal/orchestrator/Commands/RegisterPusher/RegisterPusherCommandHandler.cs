@@ -28,6 +28,7 @@ public sealed class RegisterPusherCommandHandler : ICommandHandler<RegisterPushe
             _logger.LogInformation("Pusher server already exists {PusherName}", existingServer.Id);
             return new RegisterPusherResult(existingServer.Queue.Type, existingServer.Queue.Name);
         }
+
         var queueInfo = await CreateBroker(command.Name, cancellationToken);
         if (queueInfo.IsFaulted) {
             return Result<RegisterPusherResult>.Fail(queueInfo.Error);
@@ -39,7 +40,7 @@ public sealed class RegisterPusherCommandHandler : ICommandHandler<RegisterPushe
             await DestroyBroker(pusherServer.Queue);
         }
 
-        _logger.LogInformation("Pusher server register {PusherName} at {RegisterDate}", 
+        _logger.LogInformation("Pusher server register {PusherName} at {RegisterDate}",
                                pusherServer.Id,
                                pusherServer.CreatedAt);
         return new RegisterPusherResult(pusherServer.Queue.Type, pusherServer.Queue.Name);

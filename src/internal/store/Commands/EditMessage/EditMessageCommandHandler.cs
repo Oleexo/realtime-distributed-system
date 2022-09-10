@@ -1,18 +1,23 @@
-﻿using Oleexo.RealtimeDistributedSystem.Common.Commands;
+﻿using MediatR;
+using Oleexo.RealtimeDistributedSystem.Common.Commands;
 using Oleexo.RealtimeDistributedSystem.Common.Domain.Repositories;
 using Oleexo.RealtimeDistributedSystem.Common.Monads;
+using Oleexo.RealtimeDistributedSystem.Store.Domain.Events;
 using Oleexo.RealtimeDistributedSystem.Store.SnowflakeGen;
 
 namespace Oleexo.RealtimeDistributedSystem.Store.Commands.EditMessage;
 
 public sealed class EditMessageCommandHandler : ICommandHandler<EditMessageCommand, long> {
-    private readonly ISnowflakeGen      _snowflakeGen;
     private readonly IMessageRepository _messageRepository;
+    private readonly IPublisher         _publisher;
+    private readonly ISnowflakeGen      _snowflakeGen;
 
     public EditMessageCommandHandler(ISnowflakeGen      snowflakeGen,
-                                     IMessageRepository messageRepository) {
+                                     IMessageRepository messageRepository,
+                                     IPublisher         publisher) {
         _snowflakeGen      = snowflakeGen;
         _messageRepository = messageRepository;
+        _publisher         = publisher;
     }
 
     public async Task<Result<long>> Handle(EditMessageCommand request,
@@ -32,6 +37,11 @@ public sealed class EditMessageCommandHandler : ICommandHandler<EditMessageComma
             ParentId = message.Id
         };
         await _messageRepository.CreateAsync(editionMessage, cancellationToken);
+        await _publisher.Publish(new MessageCreated {
+            Message    = editionMessage,
+            Recipients = request.Recipients,
+            Tag        = request.Tag
+        }, cancellationToken);
         return message.Id;
     }
 }

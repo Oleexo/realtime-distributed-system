@@ -10,10 +10,11 @@ namespace Oleexo.RealtimeDistributedSystem.Common.AspNetCoreHelpers;
 public static class HttpHelpers {
     public static async Task RunQueryAsync<TRequest, TResponse, TQuery, TQueryResponse>(HttpContext httpContext)
         where TQuery : IQuery<TQueryResponse> {
-        var request  = await httpContext.Request.ReadFromJsonAsync<TRequest>();
+        var request = await httpContext.Request.ReadFromJsonAsync<TRequest>();
         if (request is IHttpRequestModel httpRequestModel) {
             httpRequestModel.PopulateFromContext(httpContext.Request);
         }
+
         var mapper   = httpContext.RequestServices.GetRequiredService<IMapper>();
         var mediator = httpContext.RequestServices.GetRequiredService<IMediator>();
         var command  = mapper.Map<TQuery>(request);

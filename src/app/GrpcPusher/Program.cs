@@ -24,17 +24,16 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment()) {
     app.MapGrpcReflectionService();
 }
+
 app.MapGrpcService<MessageService>();
 app.MapGet("/",
            () =>
                "Communication with gRPC endpoints must be made through a gRPC client. To learn how to create a client, visit: https://go.microsoft.com/fwlink/?linkid=2086909");
-app.MapHealthChecks("/healthz/ready", new HealthCheckOptions
-{
+app.MapHealthChecks("/healthz/ready", new HealthCheckOptions {
     Predicate = healthCheck => healthCheck.Tags.Contains("ready")
 });
 
-app.MapHealthChecks("/healthz/live", new HealthCheckOptions
-{
+app.MapHealthChecks("/healthz/live", new HealthCheckOptions {
     Predicate = _ => false
 });
 app.Run();

@@ -7,8 +7,8 @@ using Oleexo.RealtimeDistributedSystem.Common.Domain.ValueObjects;
 namespace Oleexo.RealtimeDistributedSystem.Pusher.UserManager;
 
 internal class UserManager : IUserManager {
-    private readonly IServiceProvider                                   _services;
     private readonly ConcurrentDictionary<ConnectionId, ConnectionInfo> _connections;
+    private readonly IServiceProvider                                   _services;
     private          QueueInfo?                                         _queueInfo;
     private          string?                                            _serverName;
 
@@ -71,14 +71,10 @@ internal class UserManager : IUserManager {
                 Filter      = info.Filter,
                 ConnectedAt = info.ConnectedAt,
                 LastSeen    = DateTimeOffset.UtcNow,
-                ServerName = _serverName
+                ServerName  = _serverName
             };
             await userConnectionRepository.UpdateAsync(current);
         }
-    }
-
-    private static IUserConnectionRepository GetUserConnectionRepository(IServiceScope serviceScope) {
-        return serviceScope.ServiceProvider.GetRequiredService<IUserConnectionRepository>();
     }
 
     public async Task DisconnectAsync(ConnectionId connectionId) {
@@ -127,5 +123,9 @@ internal class UserManager : IUserManager {
             // ignore cancellation token
             await userConnectionRepository.DeleteAsync(info.Id.Value);
         }
+    }
+
+    private static IUserConnectionRepository GetUserConnectionRepository(IServiceScope serviceScope) {
+        return serviceScope.ServiceProvider.GetRequiredService<IUserConnectionRepository>();
     }
 }

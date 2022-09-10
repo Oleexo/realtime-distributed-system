@@ -1,18 +1,23 @@
-﻿using Oleexo.RealtimeDistributedSystem.Common.Commands;
+﻿using MediatR;
+using Oleexo.RealtimeDistributedSystem.Common.Commands;
 using Oleexo.RealtimeDistributedSystem.Common.Domain.Repositories;
 using Oleexo.RealtimeDistributedSystem.Common.Monads;
+using Oleexo.RealtimeDistributedSystem.Store.Domain.Events;
 using Oleexo.RealtimeDistributedSystem.Store.SnowflakeGen;
 
 namespace Oleexo.RealtimeDistributedSystem.Store.Commands.DeleteMessage;
 
 public sealed class DeleteMessageCommandHandler : ICommandHandler<DeleteMessageCommand, long> {
     private readonly IMessageRepository _messageRepository;
+    private readonly IPublisher         _publisher;
     private readonly ISnowflakeGen      _snowflakeGen;
 
     public DeleteMessageCommandHandler(IMessageRepository messageRepository,
-                                       ISnowflakeGen      snowflakeGen) {
+                                       ISnowflakeGen      snowflakeGen,
+                                       IPublisher         publisher) {
         _messageRepository = messageRepository;
         _snowflakeGen      = snowflakeGen;
+        _publisher         = publisher;
     }
 
     public async Task<Result<long>> Handle(DeleteMessageCommand request,
@@ -33,6 +38,11 @@ public sealed class DeleteMessageCommandHandler : ICommandHandler<DeleteMessageC
             IsDeletion = true
         };
         await _messageRepository.CreateAsync(deletionMessage, cancellationToken);
+        await _publisher.Publish(new MessageCreated {
+            Message    = deletionMessage,
+            Recipients = request.Recipients,
+            Tag        = request.Tag
+        }, cancellationToken);
         return deletionMessage.Id;
     }
 }

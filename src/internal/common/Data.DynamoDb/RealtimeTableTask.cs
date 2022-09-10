@@ -19,12 +19,12 @@ internal sealed class MessageTableTask : DynamoDbStorage, IStartupTask {
 
     public Task RunAsync(CancellationToken cancellationToken = default) {
         return InitializeTable(new List<KeySchemaElement> {
-                                   new KeySchemaElement("PK", KeyType.HASH),
-                                   new KeySchemaElement("SK", KeyType.RANGE)
-                               }, new List<AttributeDefinition> {
-                                   new AttributeDefinition("PK", ScalarAttributeType.S),
-                                   new AttributeDefinition("SK", ScalarAttributeType.S),
-                               });
+            new("PK", KeyType.HASH),
+            new("SK", KeyType.RANGE)
+        }, new List<AttributeDefinition> {
+            new("PK", ScalarAttributeType.S),
+            new("SK", ScalarAttributeType.S)
+        });
     }
 }
 
@@ -37,29 +37,29 @@ internal sealed class RealtimeTableTask : DynamoDbStorage, IStartupTask {
         _dynamoDbContext = dynamoDbContext;
     }
 
+    protected override AmazonDynamoDBClient DbClient => _dynamoDbContext.Instance;
+
     public string Name => "DynamoDB Init realtime table";
 
     public Task RunAsync(CancellationToken cancellationToken = default) {
         return InitializeTable(new List<KeySchemaElement> {
-                                   new KeySchemaElement("PK", KeyType.HASH),
-                                   new KeySchemaElement("SK", KeyType.RANGE)
+                                   new("PK", KeyType.HASH),
+                                   new("SK", KeyType.RANGE)
                                }, new List<AttributeDefinition> {
-                                   new AttributeDefinition("PK", ScalarAttributeType.S),
-                                   new AttributeDefinition("SK", ScalarAttributeType.S),
+                                   new("PK", ScalarAttributeType.S),
+                                   new("SK", ScalarAttributeType.S)
                                },
                                new List<GlobalSecondaryIndex> {
-                                   new GlobalSecondaryIndex {
+                                   new() {
                                        Projection = null,
                                        IndexName  = "gsi_1",
                                        KeySchema = new List<KeySchemaElement> {
-                                           new KeySchemaElement("GSI_PK1", KeyType.HASH),
-                                           new KeySchemaElement("GSI_SK1", KeyType.RANGE)
+                                           new("GSI_PK1", KeyType.HASH),
+                                           new("GSI_SK1", KeyType.RANGE)
                                        },
                                        ProvisionedThroughput = null
                                    }
                                },
-                               ttlAttributeName: "ttl");
+                               "ttl");
     }
-
-    protected override AmazonDynamoDBClient DbClient => _dynamoDbContext.Instance;
 }

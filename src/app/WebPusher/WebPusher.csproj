@@ -6,7 +6,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\internal\common\Data.Repositories.DynamoDb\Data.Repositories.DynamoDb.csproj" />
-        <ProjectReference Include="..\..\internal\pusher\PusherService\PusherService.csproj" />
+        <ProjectReference Include="..\..\internal\common\Data.Repositories.DynamoDb\Data.Repositories.DynamoDb.csproj"/>
+        <ProjectReference Include="..\..\internal\pusher\PusherService\PusherService.csproj"/>
     </ItemGroup>
 </Project>

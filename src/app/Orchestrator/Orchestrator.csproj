@@ -7,18 +7,18 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\internal\common\AspNetCoreHelpers\AspNetCoreHelpers.csproj" />
-        <ProjectReference Include="..\..\internal\common\Commands\Commands.csproj" />
-        <ProjectReference Include="..\..\internal\common\StartupTasks\StartupTasks.csproj" />
-        <ProjectReference Include="..\..\internal\orchestrator\BrokerManager.Sqs\BrokerManager.Sqs.csproj" />
-        <ProjectReference Include="..\..\internal\orchestrator\Commands\Commands.csproj" />
-        <ProjectReference Include="..\..\internal\orchestrator\Data.Repositories.DynamoDb\Data.Repositories.DynamoDb.csproj" />
-        <ProjectReference Include="..\..\internal\orchestrator\HttpModels\HttpModels.csproj" />
+        <ProjectReference Include="..\..\internal\common\AspNetCoreHelpers\AspNetCoreHelpers.csproj"/>
+        <ProjectReference Include="..\..\internal\common\Commands\Commands.csproj"/>
+        <ProjectReference Include="..\..\internal\common\StartupTasks\StartupTasks.csproj"/>
+        <ProjectReference Include="..\..\internal\orchestrator\BrokerManager.Sqs\BrokerManager.Sqs.csproj"/>
+        <ProjectReference Include="..\..\internal\orchestrator\Commands\Commands.csproj"/>
+        <ProjectReference Include="..\..\internal\orchestrator\Data.Repositories.DynamoDb\Data.Repositories.DynamoDb.csproj"/>
+        <ProjectReference Include="..\..\internal\orchestrator\HttpModels\HttpModels.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
-        <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
+        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0"/>
+        <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1"/>
     </ItemGroup>
 
 </Project>

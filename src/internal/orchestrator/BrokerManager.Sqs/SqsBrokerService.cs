@@ -31,7 +31,7 @@ internal class SqsBrokerService : BaseBrokerService {
             var _ = await _client.DeleteQueueAsync(request, cancellationToken);
             _logger.LogDebug("Queue deleted with success: {QueueUrl}", queueInfo.Name);
         }
-        catch (AmazonSQSException e) when(e.ErrorCode == "AWS.SimpleQueueService.NonExistentQueue") {
+        catch (AmazonSQSException e) when (e.ErrorCode == "AWS.SimpleQueueService.NonExistentQueue") {
             _logger.LogWarning("The queue {QueueName} was already removed", queueInfo.Name);
         }
     }

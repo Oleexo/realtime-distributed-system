@@ -17,9 +17,9 @@ internal class MessageService : Message.MessageBase {
         _logger      = logger;
     }
 
-    private async Task HandleMessage(IServerStreamWriter<ListenReply>                                responseStream,
-                                     Oleexo.RealtimeDistributedSystem.Common.Domain.Entities.Message message,
-                                     CancellationToken                                               cancellationToken = default) {
+    private async Task HandleMessage(IServerStreamWriter<ListenReply> responseStream,
+                                     Common.Domain.Entities.Message   message,
+                                     CancellationToken                cancellationToken = default) {
         try {
             var reply = new ListenReply {
                 Message = new MessageReply {
@@ -38,7 +38,7 @@ internal class MessageService : Message.MessageBase {
     }
 
     private async Task HandleEvent(IServerStreamWriter<ListenReply> responseStream,
-                                   Common.Domain.Entities.Event     @event,
+                                   Event                            @event,
                                    CancellationToken                cancellationToken = default) {
         try {
             var reply = new ListenReply {

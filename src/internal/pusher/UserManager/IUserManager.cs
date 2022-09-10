@@ -12,8 +12,11 @@ public interface IUserManager {
 
     Task DisconnectAsync(ConnectionId connectionId);
     Task RefreshAllAsync();
-    Task DispatchAsync(Letter   wrapper);
-    void SetQueueInfo(QueueInfo queueInfo, string serverName);
+    Task DispatchAsync(Letter wrapper);
+
+    void SetQueueInfo(QueueInfo queueInfo,
+                      string    serverName);
+
     bool IsReady();
     Task DisconnectAllAsync(CancellationToken cancellationToken = default);
 }

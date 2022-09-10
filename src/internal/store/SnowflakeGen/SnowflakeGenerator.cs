@@ -2,7 +2,7 @@
 
 namespace Oleexo.RealtimeDistributedSystem.Store.SnowflakeGen;
 
-internal class SnowflakeGenerator : ISnowflakeGen{
+internal class SnowflakeGenerator : ISnowflakeGen {
     private readonly IdGenerator _generator;
 
     public SnowflakeGenerator() {

@@ -22,8 +22,8 @@ public static class DictionaryExtensions {
     ///     separated by " -> ", and enclosed in curly brackets.
     /// </returns>
     public static string ToHumanReadableString<T1, T2>(this IReadOnlyDictionary<T1, T2>? dict,
-                                          Func<T2, string>?                 toString  = null,
-                                          string?                           separator = null) {
+                                                       Func<T2, string>?                 toString  = null,
+                                                       string?                           separator = null) {
         if (dict       == null ||
             dict.Count == 0) {
             return "[]";

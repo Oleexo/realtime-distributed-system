@@ -7,8 +7,8 @@ namespace Oleexo.RealtimeDistributedSystem.Pusher.BrokerListener;
 public abstract class BaseBrokerListener : IBrokerListener {
     protected abstract QueueType Type { get; }
 
-    public void Listen(QueueType                  queueType,
-                       string                     queueName,
+    public void Listen(QueueType          queueType,
+                       string             queueName,
                        Func<Letter, Task> messageHandler) {
         if (queueType != Type) {
             throw new InvalidOperationException("Invalid queue type");
@@ -19,7 +19,7 @@ public abstract class BaseBrokerListener : IBrokerListener {
 
     public abstract Task StopAsync();
 
-    protected abstract void StartListen(string                     queueName,
+    protected abstract void StartListen(string             queueName,
                                         Func<Letter, Task> messageHandler);
 
     protected Letter? DeserializeMessage(string payload) {

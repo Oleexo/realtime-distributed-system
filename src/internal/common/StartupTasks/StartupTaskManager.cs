@@ -31,6 +31,5 @@ internal sealed class StartupTaskManager : IStartupTaskStatus {
 
         IsFinished = true;
         logger.LogDebug("End startup tasks");
-
     }
 }

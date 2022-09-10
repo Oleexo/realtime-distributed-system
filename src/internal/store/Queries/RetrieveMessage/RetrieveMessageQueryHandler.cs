@@ -14,7 +14,7 @@ public sealed class RetrieveMessageQueryHandler : IQueryHandler<RetrieveMessageQ
     }
 
     public async Task<Result<Message>> Handle(RetrieveMessageQuery request,
-                                               CancellationToken   cancellationToken) {
+                                              CancellationToken    cancellationToken) {
         var message = await _messageRepository.GetByIdAsync(request.ChannelId, request.MessageId, cancellationToken);
         if (message is null) {
             return new MessageNotFoundException(request.ChannelId, request.MessageId);

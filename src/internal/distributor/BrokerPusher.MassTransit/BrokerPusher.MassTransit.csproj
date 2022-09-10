@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <RootNamespace>$(BaseName).Distributor.BrokerPusher.MassTransit</RootNamespace>
+        <AssemblyName>$(BaseName).Distributor.BrokerPusher.MassTransit</AssemblyName>
+
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="MassTransit" Version="8.0.6"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\BrokerPusher\BrokerPusher.csproj"/>
+    </ItemGroup>
+
+</Project>

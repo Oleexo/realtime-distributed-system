@@ -11,6 +11,7 @@ public static class ServiceCollectionExtensions {
         if (string.IsNullOrEmpty(url)) {
             throw new InvalidOperationException("Missing orchestrator url");
         }
+
         services.AddRefitClient<IOrchestratorApi>()
                 .ConfigureHttpClient(o => o.BaseAddress = new Uri(url));
         return services;

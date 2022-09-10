@@ -3,7 +3,8 @@
 namespace Oleexo.RealtimeDistributedSystem.Common.Domain.Entities;
 
 public record Message {
-    public static Message Empty => new Message();
+    public static Message Empty => new();
+
     [JsonPropertyName("id")]
     public long Id { get; init; }
 
@@ -15,7 +16,7 @@ public record Message {
 
     [JsonPropertyName("parent_id")]
     public long? ParentId { get; init; }
-    
+
     [JsonPropertyName("is_deletion")]
     public bool? IsDeletion { get; init; }
 }

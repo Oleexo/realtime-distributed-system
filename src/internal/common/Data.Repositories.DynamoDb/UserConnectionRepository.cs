@@ -19,10 +19,30 @@ internal class UserConnectionRepository : BaseRepository<UserConnection>, IUserC
         _dynamoDbContext = dynamoDbContext;
     }
 
+    protected override AmazonDynamoDBClient DbClient => _dynamoDbContext.Instance;
+
     public async Task<bool> CreateAsync(UserConnection    userConnection,
                                         CancellationToken cancellationToken = default) {
         await CreateOrUpdateAsync(userConnection, cancellationToken);
         return true;
+    }
+
+    public Task DeleteAsync(string            id,
+                            CancellationToken cancellationToken = default) {
+        var key = GetHashKey(id);
+        return DeletePartitionAsync("PK", key, "SK", cancellationToken);
+    }
+
+    public Task UpdateAsync(UserConnection    userConnection,
+                            CancellationToken cancellationToken = default) {
+        return CreateOrUpdateAsync(userConnection, cancellationToken);
+    }
+
+    public Task<IReadOnlyCollection<UserConnection>> GetConnectedUsersWithTag(string            tag,
+                                                                              CancellationToken cancellationToken = default) {
+        return ReadEntriesAsync("#GSI_PK1 = :GSI_PK1", new Dictionary<string, AttributeValue> {
+            { "GSI_PK1", new AttributeValue { S = $"Tag#{tag}" } }
+        }, ToEntity, "gsi_1", cancellationToken: cancellationToken);
     }
 
     private async Task CreateOrUpdateAsync(UserConnection    userConnection,
@@ -43,24 +63,6 @@ internal class UserConnectionRepository : BaseRepository<UserConnection>, IUserC
         }
 
         await PutEntriesAsync(entries, cancellationToken: cancellationToken);
-    }
-
-    public Task DeleteAsync(string            id,
-                            CancellationToken cancellationToken = default) {
-        var key = GetHashKey(id);
-        return DeletePartitionAsync("PK", key, "SK", cancellationToken);
-    }
-
-    public Task UpdateAsync(UserConnection    userConnection,
-                            CancellationToken cancellationToken = default) {
-        return CreateOrUpdateAsync(userConnection, cancellationToken);
-    }
-
-    public Task<IReadOnlyCollection<UserConnection>> GetConnectedUsersWithTag(string            tag,
-                                                                              CancellationToken cancellationToken = default) {
-        return ReadEntriesAsync("#GSI_PK1 = :GSI_PK1", new Dictionary<string, AttributeValue> {
-            { "GSI_PK1", new AttributeValue { S = $"Tag#{tag}" } }
-        }, ToEntity, "gsi_1", cancellationToken: cancellationToken);
     }
 
     private static UserConnection ToEntity(Dictionary<string, AttributeValue> fields) {
@@ -106,6 +108,4 @@ internal class UserConnectionRepository : BaseRepository<UserConnection>, IUserC
     private static string GetHashKey(string id) {
         return $"UserConnection#{id}";
     }
-
-    protected override AmazonDynamoDBClient DbClient => _dynamoDbContext.Instance;
 }

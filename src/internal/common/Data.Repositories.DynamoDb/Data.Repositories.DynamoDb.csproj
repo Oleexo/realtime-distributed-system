@@ -7,7 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Data.DynamoDb\Data.DynamoDb.csproj" />
+        <ProjectReference Include="..\Data.DynamoDb\Data.DynamoDb.csproj"/>
     </ItemGroup>
 
 </Project>

@@ -6,10 +6,10 @@ using Oleexo.RealtimeDistributedSystem.Orchestrator.Domain;
 namespace Oleexo.RealtimeDistributedSystem.Orchestrator.Api.HostedServices;
 
 public sealed class ServerCleanerHostedService : IHostedService, IDisposable {
+    private readonly ServiceOptions                      _configuration;
     private readonly ILogger<ServerCleanerHostedService> _logger;
     private readonly IMediator                           _mediator;
     private          Timer?                              _timer;
-    private readonly ServiceOptions                      _configuration;
 
     public ServerCleanerHostedService(IMediator                           mediator,
                                       IOptions<ServiceOptions>            options,

@@ -5,7 +5,7 @@ namespace Oleexo.RealtimeDistributedSystem.Distributor.BrokerPusher.Sqs;
 
 public static class ServiceCollectionExtensions {
     public static IServiceCollection AddSqsBrokerPusher(this IServiceCollection services,
-                                                      IConfiguration          configuration) {
+                                                        IConfiguration          configuration) {
         services.Configure<SqsOptions>(configuration.GetSection("Aws"));
         services.AddSingleton<IBrokerPusher, SqsBrokerPusher>();
 

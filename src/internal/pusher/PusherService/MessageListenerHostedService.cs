@@ -13,9 +13,9 @@ namespace Oleexo.RealtimeDistributedSystem.Pusher.Service;
 internal sealed class MessageListenerHostedService : IHostedService, IDisposable {
     private readonly IBrokerListener                       _brokerListener;
     private readonly ServiceOptions                        _configuration;
+    private readonly ILogger<MessageListenerHostedService> _logger;
     private readonly IOrchestratorApi                      _orchestratorApi;
     private readonly IUserManager                          _userManager;
-    private readonly ILogger<MessageListenerHostedService> _logger;
     private          Timer?                                _timer;
 
     public MessageListenerHostedService(IOptions<ServiceOptions>              options,
@@ -30,6 +30,10 @@ internal sealed class MessageListenerHostedService : IHostedService, IDisposable
         _configuration   = options.Value;
     }
 
+    public void Dispose() {
+        _timer?.Dispose();
+    }
+
     public async Task StartAsync(CancellationToken cancellationToken) {
         var response = await _orchestratorApi.RegisterPusher(new RegisterPusherRequest {
             Name = _configuration.Name
@@ -38,6 +42,15 @@ internal sealed class MessageListenerHostedService : IHostedService, IDisposable
         _brokerListener.Listen(response.QueueType, response.QueueName, ConsumeMessage);
         _timer = new Timer(KeepQueueSlotActivate, null, TimeSpan.FromSeconds(5),
                            TimeSpan.FromSeconds(30));
+    }
+
+    public async Task StopAsync(CancellationToken cancellationToken) {
+        _timer?.Change(Timeout.Infinite, 0);
+        await _brokerListener.StopAsync();
+        var request = new UnregisterPusherRequest {
+            Name = _configuration.Name
+        };
+        await _orchestratorApi.UnregisterPusher(request);
     }
 
     private void KeepQueueSlotActivate(object? state) {
@@ -55,20 +68,7 @@ internal sealed class MessageListenerHostedService : IHostedService, IDisposable
         }
     }
 
-    public async Task StopAsync(CancellationToken cancellationToken) {
-        _timer?.Change(Timeout.Infinite, 0);
-        await _brokerListener.StopAsync();
-        var request = new UnregisterPusherRequest {
-            Name = _configuration.Name
-        };
-        await _orchestratorApi.UnregisterPusher(request);
-    }
-
     private Task ConsumeMessage(Letter letter) {
         return _userManager.DispatchAsync(letter);
-    }
-
-    public void Dispose() {
-        _timer?.Dispose();
     }
 }

@@ -59,7 +59,7 @@ internal sealed class MessageRepository : BaseRepository<Message>, IMessageRepos
             { "SK", new AttributeValue { S         = $"Message#{message.Id}" } },
             { "message_id", new AttributeValue { N = message.Id.ToString() } },
             { "channel_id", new AttributeValue { S = message.ChannelId } },
-            { "content", new AttributeValue { S    = message.Content } },
+            { "content", new AttributeValue { S    = message.Content } }
         };
         if (message.ParentId.HasValue) {
             fields.Add("parent_id", new AttributeValue { N = message.ParentId.Value.ToString() });

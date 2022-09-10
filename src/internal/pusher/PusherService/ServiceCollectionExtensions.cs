@@ -1,4 +1,3 @@
-using System.Runtime.CompilerServices;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -17,9 +16,9 @@ public static class ServiceCollectionExtensions {
 
     public static IServiceCollection AddUserPresenceHealthCheck(this IServiceCollection services) {
         services.AddHealthChecks()
-                       .AddCheck<UserManagerHealthCheck>("UserManager",
-                                                         failureStatus: HealthStatus.Unhealthy,
-                                                         new[] { "ready" });
+                .AddCheck<UserManagerHealthCheck>("UserManager",
+                                                  HealthStatus.Unhealthy,
+                                                  new[] { "ready" });
         return services;
     }
 }

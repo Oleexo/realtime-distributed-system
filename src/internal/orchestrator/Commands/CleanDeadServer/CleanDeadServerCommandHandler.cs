@@ -11,9 +11,9 @@ namespace Oleexo.RealtimeDistributedSystem.Orchestrator.Commands.CleanDeadServer
 
 public sealed class CleanDeadServerCommandHandler : ICommandHandler<CleanDeadServerCommand> {
     private readonly IBrokerService                         _brokerService;
+    private readonly ServiceOptions                         _configuration;
     private readonly ILogger<CleanDeadServerCommandHandler> _logger;
     private readonly IPusherServerRepository                _pusherServerRepository;
-    private readonly ServiceOptions                         _configuration;
 
     public CleanDeadServerCommandHandler(IPusherServerRepository                pusherServerRepository,
                                          IBrokerService                         brokerService,
@@ -45,7 +45,7 @@ public sealed class CleanDeadServerCommandHandler : ICommandHandler<CleanDeadSer
             removedServers += 1;
         }
 
-        _logger.LogInformation("{AliveServer} servers alive. {DeadServers} servers dead", 
+        _logger.LogInformation("{AliveServer} servers alive. {DeadServers} servers dead",
                                servers.Count - removedServers,
                                removedServers);
         return Unit.Value;

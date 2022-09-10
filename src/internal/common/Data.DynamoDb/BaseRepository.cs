@@ -1,6 +1,5 @@
 using System.Text.Json;
 using Amazon.DynamoDBv2;
-using Amazon.DynamoDBv2.Model;
 using Microsoft.Extensions.Logging;
 
 namespace Oleexo.RealtimeDistributedSystem.Common.Data.DynamoDb;

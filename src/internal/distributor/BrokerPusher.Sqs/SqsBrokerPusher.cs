@@ -1,17 +1,15 @@
-﻿using System.Text.Json;
-using Amazon.Runtime;
+﻿using Amazon.Runtime;
 using Amazon.SQS;
 using Amazon.SQS.Model;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Oleexo.RealtimeDistributedSystem.Common.Domain.Entities;
 using Oleexo.RealtimeDistributedSystem.Common.Domain.ValueObjects;
 
 namespace Oleexo.RealtimeDistributedSystem.Distributor.BrokerPusher.Sqs;
 
 internal sealed class SqsBrokerPusher : BaseBrokerPusher {
-    private readonly ILogger<SqsBrokerPusher> _logger;
     private readonly AmazonSQSClient          _client;
+    private readonly ILogger<SqsBrokerPusher> _logger;
 
     public SqsBrokerPusher(IOptions<SqsOptions>     options,
                            ILogger<SqsBrokerPusher> logger) {
@@ -22,7 +20,9 @@ internal sealed class SqsBrokerPusher : BaseBrokerPusher {
         });
     }
 
-    public override QueueType Type => QueueType.Sqs;
+    protected override bool IsSupported(QueueType queueType) {
+        return queueType == QueueType.Sqs;
+    }
 
     protected override Task SendMessageAsync(string            content,
                                              string            queueName,

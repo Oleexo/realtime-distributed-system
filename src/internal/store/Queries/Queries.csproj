@@ -6,8 +6,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\common\Domain\Domain.csproj" />
-      <ProjectReference Include="..\..\common\Queries\Queries.csproj" />
+        <ProjectReference Include="..\..\common\Domain\Domain.csproj"/>
+        <ProjectReference Include="..\..\common\Queries\Queries.csproj"/>
     </ItemGroup>
 
 </Project>

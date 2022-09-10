@@ -3,7 +3,7 @@ using Oleexo.RealtimeDistributedSystem.Distributor.Api.Models.Requests;
 using Oleexo.RealtimeDistributedSystem.Distributor.Api.Models.Responses;
 using Oleexo.RealtimeDistributedSystem.Distributor.Commands.DispatchMessage;
 
-namespace Oleexo.RealtimeDistributedSystem.Distributor.Api.Models.Mappings; 
+namespace Oleexo.RealtimeDistributedSystem.Distributor.Api.Models.Mappings;
 
 public sealed class DispatchMessageMapping : Profile {
     public DispatchMessageMapping() {

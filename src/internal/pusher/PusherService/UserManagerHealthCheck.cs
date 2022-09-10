@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Oleexo.RealtimeDistributedSystem.Pusher.UserManager;
 
-namespace Oleexo.RealtimeDistributedSystem.Pusher.Service; 
+namespace Oleexo.RealtimeDistributedSystem.Pusher.Service;
 
 public class UserManagerHealthCheck : IHealthCheck {
     private readonly IUserManager _userManager;
@@ -11,7 +11,7 @@ public class UserManagerHealthCheck : IHealthCheck {
     }
 
     public Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context,
-                                                          CancellationToken  cancellationToken = default) {
+                                                    CancellationToken  cancellationToken = default) {
         var ready = _userManager.IsReady();
 
         if (ready) {

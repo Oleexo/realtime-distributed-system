@@ -5,7 +5,7 @@ namespace Oleexo.RealtimeDistributedSystem.Pusher.BrokerListener.AmazonSqs;
 
 public static class ServiceCollectionExtensions {
     public static IServiceCollection AddSqsBrokerListener(this IServiceCollection services,
-                                                       IConfiguration          configuration) {
+                                                          IConfiguration          configuration) {
         services.Configure<SqsOptions>(configuration.GetSection("Aws"));
         services.AddSingleton<IBrokerListener, SqsBrokerListener>();
 

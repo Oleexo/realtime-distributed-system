@@ -10,14 +10,16 @@ using Oleexo.RealtimeDistributedSystem.Orchestrator.Commands.RegisterPusher;
 using Oleexo.RealtimeDistributedSystem.Orchestrator.Commands.UnregisterPusher;
 using Oleexo.RealtimeDistributedSystem.Orchestrator.Data.Repositories.DynamoDb;
 using Oleexo.RealtimeDistributedSystem.Orchestrator.Domain;
+using Oleexo.RealtimeDistributedSystem.Orchestrator.Domain.Entities;
 using Oleexo.RealtimeDistributedSystem.Orchestrator.HttpModels.Requests;
 using Oleexo.RealtimeDistributedSystem.Orchestrator.HttpModels.Responses;
+using Oleexo.RealtimeDistributedSystem.Orchestrator.Queries.RetrieveMultipleServer;
 using static Oleexo.RealtimeDistributedSystem.Common.AspNetCoreHelpers.HttpHelpers;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSqsBrokerService(builder.Configuration);
 builder.Services.AddAutoMapper(typeof(Program));
-builder.Services.AddMediatR(typeof(RegisterPusherCommand));
+builder.Services.AddMediatR(typeof(RegisterPusherCommandHandler), typeof(RetrieveMultipleServerQueryHandler));
 builder.Services.AddDynamoDbPersistence(builder.Configuration);
 builder.Services.AddPersistence();
 builder.Services.AddHostedService<ServerCleanerHostedService>();
@@ -30,6 +32,7 @@ app.MapGet("/", () => "Orchestrator");
 app.MapPost("/pusher/refresh",    RunCommandAsync<RefreshPusherRequest, RefreshPusherCommand>);
 app.MapPost("/pusher/register",   RunCommandAsync<RegisterPusherRequest, RegisterPusherResponse, RegisterPusherCommand, RegisterPusherResult>);
 app.MapPost("/pusher/unregister", RunCommandAsync<UnregisterPusherRequest, UnregisterPusherCommand>);
+app.MapGet("/pusher", RunQueryAsync<GetAllPusherServerRequest, IReadOnlyCollection<PusherServerResponse>, RetrieveMultipleServerQuery, IReadOnlyCollection<PusherServer>>);
 app.MapGcCollectDebug();
 
 app.MapHealthChecks("/healthz/ready", new HealthCheckOptions {

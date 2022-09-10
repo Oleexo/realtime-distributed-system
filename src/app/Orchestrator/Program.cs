@@ -1,5 +1,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Oleexo.RealtimeDistributedSystem.Common.AspNetCoreHelpers;
 using Oleexo.RealtimeDistributedSystem.Common.Data.DynamoDb;
 using Oleexo.RealtimeDistributedSystem.Common.StartupTasks;
 using Oleexo.RealtimeDistributedSystem.Orchestrator.Api.HostedServices;
@@ -24,12 +25,12 @@ builder.Services.AddStartupTasks();
 builder.Services.Configure<ServiceOptions>(builder.Configuration.GetSection("Orchestrator"));
 var app = builder.Build();
 
-app.MapGet("/", () => "Hello World!");
+app.MapGet("/", () => "Orchestrator");
 
 app.MapPost("/pusher/refresh",    RunCommandAsync<RefreshPusherRequest, RefreshPusherCommand>);
 app.MapPost("/pusher/register",   RunCommandAsync<RegisterPusherRequest, RegisterPusherResponse, RegisterPusherCommand, RegisterPusherResult>);
 app.MapPost("/pusher/unregister", RunCommandAsync<UnregisterPusherRequest, UnregisterPusherCommand>);
-
+app.MapGcCollectDebug();
 
 app.MapHealthChecks("/healthz/ready", new HealthCheckOptions {
     Predicate = healthCheck => healthCheck.Tags.Contains("ready")

@@ -3,12 +3,22 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Oleexo.RealtimeDistributedSystem.Common.Commands;
+using Oleexo.RealtimeDistributedSystem.Common.Queries;
 
 namespace Oleexo.RealtimeDistributedSystem.Common.AspNetCoreHelpers;
 
 public static class HttpHelpers {
-    public static Task<IResult> GetAsync<TRequest, TResponse, TQuery, TQueryResponse>(HttpContext httpContext) {
-        throw new NotImplementedException();
+    public static async Task RunQueryAsync<TRequest, TResponse, TQuery, TQueryResponse>(HttpContext httpContext)
+        where TQuery : IQuery<TQueryResponse> {
+        var request  = await httpContext.Request.ReadFromJsonAsync<TRequest>();
+        if (request is IHttpRequestModel httpRequestModel) {
+            httpRequestModel.PopulateFromContext(httpContext.Request);
+        }
+        var mapper   = httpContext.RequestServices.GetRequiredService<IMapper>();
+        var mediator = httpContext.RequestServices.GetRequiredService<IMediator>();
+        var command  = mapper.Map<TQuery>(request);
+        var result   = await mediator.Send(command, httpContext.RequestAborted);
+        result.Match(r => HandleResponse<TQueryResponse, TResponse>(r, mapper, httpContext), e => HandleException(e, httpContext));
     }
 
     public static async Task RunCommandAsync<TRequest, TResponse, TCommand, TCommandResult>(HttpContext httpContext)

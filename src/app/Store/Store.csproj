@@ -6,4 +6,16 @@
         <RootNamespace>$(BaseName).Store.Api</RootNamespace>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\..\internal\common\AspNetCoreHelpers\AspNetCoreHelpers.csproj" />
+      <ProjectReference Include="..\..\internal\common\Data.DynamoDb\Data.DynamoDb.csproj" />
+      <ProjectReference Include="..\..\internal\common\Data.Repositories.DynamoDb\Data.Repositories.DynamoDb.csproj" />
+      <ProjectReference Include="..\..\internal\store\Queries\Queries.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+      <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
+    </ItemGroup>
+
 </Project>

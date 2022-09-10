@@ -14,6 +14,7 @@ using Oleexo.RealtimeDistributedSystem.Orchestrator.Domain.Entities;
 using Oleexo.RealtimeDistributedSystem.Orchestrator.HttpModels.Requests;
 using Oleexo.RealtimeDistributedSystem.Orchestrator.HttpModels.Responses;
 using Oleexo.RealtimeDistributedSystem.Orchestrator.Queries.RetrieveMultipleServer;
+using Prometheus;
 using static Oleexo.RealtimeDistributedSystem.Common.AspNetCoreHelpers.HttpHelpers;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,6 +28,8 @@ builder.Services.AddStartupTasks();
 builder.Services.Configure<ServiceOptions>(builder.Configuration.GetSection("Orchestrator"));
 var app = builder.Build();
 
+app.UseHttpMetrics();
+
 app.MapGet("/", () => "Orchestrator");
 
 app.MapPost("/pusher/refresh",    RunCommandAsync<RefreshPusherRequest, RefreshPusherCommand>);
@@ -34,6 +37,7 @@ app.MapPost("/pusher/register",   RunCommandAsync<RegisterPusherRequest, Registe
 app.MapPost("/pusher/unregister", RunCommandAsync<UnregisterPusherRequest, UnregisterPusherCommand>);
 app.MapGet("/pusher", RunQueryAsync<GetAllPusherServerRequest, IReadOnlyCollection<PusherServerResponse>, RetrieveMultipleServerQuery, IReadOnlyCollection<PusherServer>>);
 app.MapGcCollectDebug();
+app.UseMetricServer();
 
 app.MapHealthChecks("/healthz/ready", new HealthCheckOptions {
     Predicate = healthCheck => healthCheck.Tags.Contains("ready")

@@ -7,18 +7,19 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\internal\common\AspNetCoreHelpers\AspNetCoreHelpers.csproj"/>
-        <ProjectReference Include="..\..\internal\common\Data.Repositories.DynamoDb\Data.Repositories.DynamoDb.csproj"/>
-        <ProjectReference Include="..\..\internal\distributor\BrokerPusher.Sqs\BrokerPusher.Sqs.csproj"/>
-        <ProjectReference Include="..\..\internal\distributor\Commands\Commands.csproj"/>
-        <ProjectReference Include="..\..\internal\distributor\Consumers\Consumers.csproj"/>
+        <ProjectReference Include="..\..\internal\common\AspNetCoreHelpers\AspNetCoreHelpers.csproj" />
+        <ProjectReference Include="..\..\internal\common\Data.Repositories.DynamoDb\Data.Repositories.DynamoDb.csproj" />
+        <ProjectReference Include="..\..\internal\distributor\BrokerPusher.Sqs\BrokerPusher.Sqs.csproj" />
+        <ProjectReference Include="..\..\internal\distributor\Commands\Commands.csproj" />
+        <ProjectReference Include="..\..\internal\distributor\Consumers\Consumers.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0"/>
-        <PackageReference Include="MassTransit" Version="8.0.6"/>
-        <PackageReference Include="MassTransit.AmazonSQS" Version="8.0.6"/>
-        <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1"/>
+        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+        <PackageReference Include="MassTransit" Version="8.0.6" />
+        <PackageReference Include="MassTransit.AmazonSQS" Version="8.0.6" />
+        <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
+        <PackageReference Include="prometheus-net.AspNetCore" Version="6.0.0" />
     </ItemGroup>
 
 </Project>

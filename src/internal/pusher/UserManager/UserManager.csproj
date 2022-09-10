@@ -7,6 +7,8 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\common\Domain\Domain.csproj"/>
+        <ProjectReference Include="..\..\common\StartupTasks.Abstractions\StartupTasks.Abstractions.csproj"/>
+        <ProjectReference Include="..\..\common\Metrics\Metrics.csproj"/>
     </ItemGroup>
 
     <ItemGroup>

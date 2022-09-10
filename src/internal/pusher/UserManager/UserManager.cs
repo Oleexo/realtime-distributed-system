@@ -3,18 +3,22 @@ using Microsoft.Extensions.DependencyInjection;
 using Oleexo.RealtimeDistributedSystem.Common.Domain.Entities;
 using Oleexo.RealtimeDistributedSystem.Common.Domain.Repositories;
 using Oleexo.RealtimeDistributedSystem.Common.Domain.ValueObjects;
+using Oleexo.RealtimeDistributedSystem.Common.Metrics;
 
 namespace Oleexo.RealtimeDistributedSystem.Pusher.UserManager;
 
 internal class UserManager : IUserManager {
     private readonly ConcurrentDictionary<ConnectionId, ConnectionInfo> _connections;
     private readonly IServiceProvider                                   _services;
+    private readonly IMetrics                                           _metrics;
     private          QueueInfo?                                         _queueInfo;
     private          string?                                            _serverName;
 
-    public UserManager(IServiceProvider services) {
-        _services    = services;
-        _connections = new ConcurrentDictionary<ConnectionId, ConnectionInfo>();
+    public UserManager(IServiceProvider services,
+                       IMetrics metrics) {
+        _services     = services;
+        _metrics = metrics;
+        _connections  = new ConcurrentDictionary<ConnectionId, ConnectionInfo>();
     }
 
     public async Task<ConnectionId?> ConnectAsync(string              userId,
@@ -51,6 +55,7 @@ internal class UserManager : IUserManager {
         }
 
         await userConnectionRepository.CreateAsync(current);
+        _metrics.IncrGauge(MetricConstants.ConnectedUsers);
         return info.Id;
     }
 
@@ -78,10 +83,15 @@ internal class UserManager : IUserManager {
     }
 
     public async Task DisconnectAsync(ConnectionId connectionId) {
-        using var scope                    = _services.CreateScope();
-        var       userConnectionRepository = GetUserConnectionRepository(scope);
-        _connections.TryRemove(connectionId, out _);
-        await userConnectionRepository.DeleteAsync(connectionId.Value);
+        try {
+            using var scope                    = _services.CreateScope();
+            var       userConnectionRepository = GetUserConnectionRepository(scope);
+            _connections.TryRemove(connectionId, out _);
+            await userConnectionRepository.DeleteAsync(connectionId.Value);
+        }
+        finally {
+            _metrics.DecrGauge(MetricConstants.ConnectedUsers);
+        }
     }
 
     public async Task DispatchAsync(Letter wrapper) {
@@ -119,9 +129,11 @@ internal class UserManager : IUserManager {
         using var scope                    = _services.CreateScope();
         var       userConnectionRepository = GetUserConnectionRepository(scope);
 
-        foreach (var info in _connections.Values) {
-            // ignore cancellation token
-            await userConnectionRepository.DeleteAsync(info.Id.Value);
+        foreach (var connectionId in new List<ConnectionId>(_connections.Keys)) {
+            if (_connections.TryRemove(connectionId, out var info)) {
+                await userConnectionRepository.DeleteAsync(info.Id.Value);
+                _metrics.DecrGauge(MetricConstants.ConnectedUsers);
+            }
         }
     }
 

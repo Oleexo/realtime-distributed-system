@@ -3,6 +3,7 @@ using Amazon.SimpleNotificationService;
 using Amazon.SQS;
 using MassTransit;
 using MediatR;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Oleexo.RealtimeDistributedSystem.Common.Data.DynamoDb;
 using Oleexo.RealtimeDistributedSystem.Common.Data.Repositories.DynamoDb;
 using Oleexo.RealtimeDistributedSystem.Distributor.Api.Models.Mappings;
@@ -11,6 +12,7 @@ using Oleexo.RealtimeDistributedSystem.Distributor.BrokerPusher.Sqs;
 using Oleexo.RealtimeDistributedSystem.Distributor.Commands.DispatchEvent;
 using Oleexo.RealtimeDistributedSystem.Distributor.Commands.DispatchMessage;
 using Oleexo.RealtimeDistributedSystem.Distributor.Consumers;
+using Prometheus;
 using static Oleexo.RealtimeDistributedSystem.Common.AspNetCoreHelpers.HttpHelpers;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,7 +27,6 @@ builder.Services.AddMassTransit(x => {
                       cfg) => {
         var region = builder.Configuration["Aws:Region"];
         cfg.Host("localhost", h => {
-            var cred = new BasicAWSCredentials("dummy", "Dummy");
             h.Config(new AmazonSQSConfig {
                 ServiceURL = region
             });
@@ -39,9 +40,19 @@ builder.Services.AddMassTransit(x => {
     });
 });
 var app = builder.Build();
-
+app.UseHttpMetrics();
 // Post a message
 app.MapPost("/message", RunCommandAsync<DispatchMessageRequest, DispatchMessageCommand>);
 // Post an event
 app.MapPost("/event", RunCommandAsync<DispatchEventRequest, DispatchEventCommand>);
+
+app.UseMetricServer();
+
+app.MapHealthChecks("/healthz/ready", new HealthCheckOptions {
+    Predicate = healthCheck => healthCheck.Tags.Contains("ready")
+});
+
+app.MapHealthChecks("/healthz/live", new HealthCheckOptions {
+    Predicate = _ => false
+});
 app.Run();

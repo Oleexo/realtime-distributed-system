@@ -1,3 +1,4 @@
+using Amazon.SimpleNotificationService;
 using Amazon.SQS;
 using MassTransit;
 using MediatR;
@@ -15,6 +16,7 @@ using Oleexo.RealtimeDistributedSystem.Store.Commands.StoreMessage;
 using Oleexo.RealtimeDistributedSystem.Store.Publishers;
 using Oleexo.RealtimeDistributedSystem.Store.Queries.RetrieveMessage;
 using Oleexo.RealtimeDistributedSystem.Store.SnowflakeGen;
+using Prometheus;
 using static Oleexo.RealtimeDistributedSystem.Common.AspNetCoreHelpers.HttpHelpers;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,12 +31,15 @@ builder.Services.AddMassTransit(x => {
     x.UsingAmazonSqs((ctx,
                       cfg) => {
         var region = builder.Configuration["Aws:Region"];
-        cfg.Host("us-east-1", h => {
-            h.AccessKey("dummy");
-            h.SecretKey("dummy");
+        cfg.Host("localhost", h => {
             h.Config(new AmazonSQSConfig {
                 ServiceURL = region
             });
+            h.Config(new AmazonSimpleNotificationServiceConfig {
+                ServiceURL = region
+            });
+            h.AccessKey("dummy");
+            h.SecretKey("dummy");
         });
         cfg.ConfigureEndpoints(ctx);
     });
@@ -42,6 +47,7 @@ builder.Services.AddMassTransit(x => {
 
 var app = builder.Build();
 
+app.UseHttpMetrics();
 app.MapGet("/message", RunQueryAsync<GetMessageRequest, MessageResponse, RetrieveMessageQuery, Message>);
 // Create message
 app.MapPost("/message", RunCommandAsync<CreateMessageRequest, CreateMessageResponse, StoreMessageCommand, long>);
@@ -51,5 +57,6 @@ app.MapPut("/message", RunCommandAsync<EditMessageRequest, EditMessageResponse, 
 app.MapDelete("/message", RunCommandAsync<DeleteMessageRequest, DeleteMessageResponse, DeleteMessageCommand, long>);
 
 app.MapGcCollectDebug();
+app.UseMetricServer();
 
 app.Run();

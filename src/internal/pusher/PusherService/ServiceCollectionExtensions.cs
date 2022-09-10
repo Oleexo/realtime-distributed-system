@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Oleexo.RealtimeDistributedSystem.Common.StartupTasks.Abstractions;
 using Oleexo.RealtimeDistributedSystem.Pusher.BrokerListener.AmazonSqs;
 
 namespace Oleexo.RealtimeDistributedSystem.Pusher.Service;

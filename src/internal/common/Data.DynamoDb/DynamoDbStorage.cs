@@ -435,6 +435,9 @@ public abstract class DynamoDbStorage {
                 throw new InvalidOperationException($"Failure creating table {tableName}");
             }
         }
+        catch (ResourceInUseException) {
+            
+        }
         catch (Exception exception) {
             _logger.LogCritical(exception, "Could not create table {TableName}", tableName);
             throw;

@@ -1,0 +1,31 @@
+﻿{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/message",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5282
+        }
+      ],
+      "UpstreamPathTemplate": "/message",
+      "UpstreamHttpMethod": [ "Get","Post", "Put", "Delete" ]
+    },
+    {
+      "DownstreamPathTemplate": "/event",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5271
+        }
+      ],
+      "UpstreamPathTemplate": "/event",
+      "UpstreamHttpMethod": [ "Post" ]
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "http://localhost:5281"
+  }
+}

@@ -111,6 +111,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Consumers", "src\internal\d
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrokerPusher.MassTransit", "src\internal\distributor\BrokerPusher.MassTransit\BrokerPusher.MassTransit.csproj", "{DED88B41-B994-4816-BDF5-6FF77F68881B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gateway", "src\app\Gateway\Gateway.csproj", "{6886E16F-87AF-41F9-AA25-8E655EB8EA76}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -170,6 +172,7 @@ Global
 		{3BD811A2-F30A-4F6F-9126-EF4E0910B828} = {A8807D4E-878B-4B31-B451-BE7AEA2C0ABD}
 		{419A0B2E-A582-431E-B352-5F1F72FE7D51} = {A8F99970-4418-4C54-96BF-E1383D7A1CBE}
 		{DED88B41-B994-4816-BDF5-6FF77F68881B} = {A8F99970-4418-4C54-96BF-E1383D7A1CBE}
+		{6886E16F-87AF-41F9-AA25-8E655EB8EA76} = {00E1F791-5E4F-475F-A1EA-9A914A77C063}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{31F8CD7B-0821-4674-A186-C2341BB89692}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -320,5 +323,9 @@ Global
 		{DED88B41-B994-4816-BDF5-6FF77F68881B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DED88B41-B994-4816-BDF5-6FF77F68881B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DED88B41-B994-4816-BDF5-6FF77F68881B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6886E16F-87AF-41F9-AA25-8E655EB8EA76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6886E16F-87AF-41F9-AA25-8E655EB8EA76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6886E16F-87AF-41F9-AA25-8E655EB8EA76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6886E16F-87AF-41F9-AA25-8E655EB8EA76}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

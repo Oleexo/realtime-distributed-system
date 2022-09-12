@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Oleexo.RealtimeDistributedSystem.Common.Domain.Entities;
+using Oleexo.RealtimeDistributedSystem.Store.Api.Models.Requests;
 using Oleexo.RealtimeDistributedSystem.Store.Api.Models.Responses;
+using Oleexo.RealtimeDistributedSystem.Store.Commands.ReadMessage;
 
 namespace Oleexo.RealtimeDistributedSystem.Store.Api.Models.Mappings;
 
@@ -12,5 +14,7 @@ public sealed class MessageMapping : Profile {
            .ForMember(p => p.ChannelId,  dst => dst.MapFrom(x => x.ChannelId))
            .ForMember(p => p.ParentId,   dst => dst.MapFrom(x => x.ParentId))
            .ForMember(p => p.IsDeletion, dst => dst.MapFrom(x => x.IsDeletion));
+        CreateMap<MessageReadRequest, ReadMessageCommand>();
     }
 }
+

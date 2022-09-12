@@ -6,11 +6,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\common\Domain\Domain.csproj"/>
+        <ProjectReference Include="..\..\common\Domain\Domain.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="MediatR.Contracts" Version="1.0.1"/>
+        <PackageReference Include="MediatR.Contracts" Version="1.0.1" />
     </ItemGroup>
 
 </Project>

@@ -22,7 +22,7 @@ builder.Services.AddCommonRepositories();
 builder.Services.AddAutoMapper(typeof(DispatchMessageMapping));
 builder.Services.AddSqsBrokerPusher(builder.Configuration);
 builder.Services.AddMassTransit(x => {
-    x.AddConsumer<MessageConsumer, MessageConsumerDefinition>();
+    x.AddConsumer<LetterConsumer, LetterConsumerDefinition>();
     x.UsingAmazonSqs((ctx,
                       cfg) => {
         var region = builder.Configuration["Aws:Region"];

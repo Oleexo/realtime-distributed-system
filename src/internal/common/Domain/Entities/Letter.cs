@@ -3,6 +3,8 @@ using System.Text.Json.Serialization;
 namespace Oleexo.RealtimeDistributedSystem.Common.Domain.Entities;
 
 public record Letter {
+    public static Letter Empty => new();
+    
     [JsonPropertyName("message")]
     public Message? Message { get; init; }
 

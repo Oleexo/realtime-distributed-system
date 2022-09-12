@@ -6,9 +6,12 @@ public record Message {
     public static Message Empty => new();
 
     [JsonPropertyName("id")]
-    public long Id { get; init; }
+    public long Id { get;         init; }
 
-    [JsonPropertyName("channel_id")]
+    [JsonPropertyName("author")]
+    public string Author { get; init; } = string.Empty;
+
+    [JsonPropertyName("channel")]
     public string ChannelId { get; init; } = string.Empty;
 
     [JsonPropertyName("content")]
@@ -20,3 +23,4 @@ public record Message {
     [JsonPropertyName("is_deletion")]
     public bool? IsDeletion { get; init; }
 }
+

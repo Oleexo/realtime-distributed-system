@@ -12,6 +12,7 @@ using Oleexo.RealtimeDistributedSystem.Store.Api.Models.Requests;
 using Oleexo.RealtimeDistributedSystem.Store.Api.Models.Responses;
 using Oleexo.RealtimeDistributedSystem.Store.Commands.DeleteMessage;
 using Oleexo.RealtimeDistributedSystem.Store.Commands.EditMessage;
+using Oleexo.RealtimeDistributedSystem.Store.Commands.ReadMessage;
 using Oleexo.RealtimeDistributedSystem.Store.Commands.StoreMessage;
 using Oleexo.RealtimeDistributedSystem.Store.Publishers;
 using Oleexo.RealtimeDistributedSystem.Store.Queries.RetrieveMessage;
@@ -55,6 +56,7 @@ app.MapPost("/message", RunCommandAsync<CreateMessageRequest, CreateMessageRespo
 app.MapPut("/message", RunCommandAsync<EditMessageRequest, EditMessageResponse, EditMessageCommand, long>);
 // Delete message
 app.MapDelete("/message", RunCommandAsync<DeleteMessageRequest, DeleteMessageResponse, DeleteMessageCommand, long>);
+app.MapPost("/channel/read", RunCommandAsync<MessageReadRequest, ReadMessageCommand>);
 
 app.MapGcCollectDebug();
 app.UseMetricServer();

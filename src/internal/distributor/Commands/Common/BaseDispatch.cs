@@ -1,5 +1,7 @@
-﻿using Oleexo.RealtimeDistributedSystem.Common.Domain.Entities;
+﻿using MediatR;
+using Oleexo.RealtimeDistributedSystem.Common.Domain.Entities;
 using Oleexo.RealtimeDistributedSystem.Common.Domain.Repositories;
+using Oleexo.RealtimeDistributedSystem.Common.Monads;
 using Oleexo.RealtimeDistributedSystem.Distributor.BrokerPusher;
 
 namespace Oleexo.RealtimeDistributedSystem.Distributor.Commands.Common;
@@ -38,9 +40,9 @@ public abstract class BaseDispatch {
         return DispatchToConnectedUsersAsync(letter, recipients, cancellationToken);
     }
 
-    private async Task DispatchToConnectedUsersAsync(Letter                      letter,
-                                                     IReadOnlyCollection<string> recipients,
-                                                     CancellationToken           cancellationToken = default) {
+    protected async Task<Result<Unit>> DispatchToConnectedUsersAsync(Letter                      letter,
+                                                                     IReadOnlyCollection<string> recipients,
+                                                                     CancellationToken           cancellationToken = default) {
         var recipientSet   = new HashSet<string>(recipients);
         var connectedUsers = await _userConnectionRepository.GetConnectedUsersWithTag(letter.Tag, cancellationToken);
         var connectedRecipients = connectedUsers.Where(p => recipientSet.Contains(p.UserId))
@@ -52,5 +54,7 @@ public abstract class BaseDispatch {
                                          .ToArray()
             }, usersByQueue.Key, cancellationToken);
         }
+
+        return Result<Unit>.Success(Unit.Value);
     }
 }

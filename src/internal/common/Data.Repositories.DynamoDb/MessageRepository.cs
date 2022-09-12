@@ -42,6 +42,7 @@ internal sealed class MessageRepository : BaseRepository<Message>, IMessageRepos
                                .N),
             ChannelId = fields["channel_id"]
                .S,
+            Author = fields["author"].S,
             ParentId = fields.ContainsKey("parent_id")
                            ? long.Parse(fields["parent_id"]
                                            .N)
@@ -59,7 +60,8 @@ internal sealed class MessageRepository : BaseRepository<Message>, IMessageRepos
             { "SK", new AttributeValue { S         = $"Message#{message.Id}" } },
             { "message_id", new AttributeValue { N = message.Id.ToString() } },
             { "channel_id", new AttributeValue { S = message.ChannelId } },
-            { "content", new AttributeValue { S    = message.Content } }
+            { "content", new AttributeValue { S    = message.Content } },
+            { "author", new AttributeValue { S = message.Author}}
         };
         if (message.ParentId.HasValue) {
             fields.Add("parent_id", new AttributeValue { N = message.ParentId.Value.ToString() });

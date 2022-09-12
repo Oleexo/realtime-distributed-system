@@ -2,13 +2,7 @@
 
 namespace Oleexo.RealtimeDistributedSystem.Store.Api.Models.Requests;
 
-public record CreateMessageRequest {
-    [JsonPropertyName("content")]
-    public string Content { get; init; } = string.Empty;
-
-    [JsonPropertyName("author")]
-    public string Author { get; init; } = string.Empty;
-
+public record MessageReadRequest {
     [JsonPropertyName("recipients")]
     public IReadOnlyCollection<string> Recipients { get; init; } = new List<string>();
 
@@ -17,4 +11,10 @@ public record CreateMessageRequest {
 
     [JsonPropertyName("channel_id")]
     public string ChannelId { get; init; } = string.Empty;
+
+    [JsonPropertyName("message_id")]
+    public long MessageId { get; init; }
+
+    [JsonPropertyName("user_id")]
+    public string UserId { get; init; } = string.Empty;
 }

@@ -7,9 +7,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\common\Commands\Commands.csproj"/>
-        <ProjectReference Include="..\..\common\Domain\Domain.csproj"/>
-        <ProjectReference Include="..\BrokerPusher\BrokerPusher.csproj"/>
+        <ProjectReference Include="..\..\common\Commands\Commands.csproj" />
+        <ProjectReference Include="..\..\common\Domain\Domain.csproj" />
+        <ProjectReference Include="..\BrokerPusher\BrokerPusher.csproj" />
     </ItemGroup>
 
 </Project>

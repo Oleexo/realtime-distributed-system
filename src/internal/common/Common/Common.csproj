@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <RootNamespace>$(BaseName).Common</RootNamespace>
+        <AssemblyName>$(BaseName).Common</AssemblyName>
+    </PropertyGroup>
+
+</Project>

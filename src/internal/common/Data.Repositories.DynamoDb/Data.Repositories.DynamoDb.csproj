@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <RootNamespace>$(BaseName).Common.Data.Repositories.DynamoDb</RootNamespace>
+        <AssemblyName>$(BaseName).Common.Data.Repositories.DynamoDb</AssemblyName>
+
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Data.DynamoDb\Data.DynamoDb.csproj"/>
+    </ItemGroup>
+
+</Project>

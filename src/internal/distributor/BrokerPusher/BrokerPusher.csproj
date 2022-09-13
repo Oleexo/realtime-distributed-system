@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <RootNamespace>$(BaseName).Distributor.BrokerPusher</RootNamespace>
+        <AssemblyName>$(BaseName).Distributor.BrokerPusher</AssemblyName>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\common\Domain\Domain.csproj"/>
+    </ItemGroup>
+
+</Project>

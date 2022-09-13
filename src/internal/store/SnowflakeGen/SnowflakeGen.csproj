@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <RootNamespace>$(BaseName).Store.SnowflakeGen</RootNamespace>
+        <AssemblyName>$(BaseName).Store.SnowflakeGen</AssemblyName>
+
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="IdGen" Version="3.0.1"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0"/>
+    </ItemGroup>
+
+</Project>

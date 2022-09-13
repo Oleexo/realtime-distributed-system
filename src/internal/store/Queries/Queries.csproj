@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <RootNamespace>$(BaseName).Store.Queries</RootNamespace>
+        <AssemblyName>$(BaseName).Store.Queries</AssemblyName>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\common\Domain\Domain.csproj"/>
+        <ProjectReference Include="..\..\common\Queries\Queries.csproj"/>
+    </ItemGroup>
+
+</Project>

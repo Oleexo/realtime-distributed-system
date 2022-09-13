@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <RootNamespace>$(BaseName).Common.Metrics</RootNamespace>
+        <AssemblyName>$(BaseName).Common.Metrics</AssemblyName>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="prometheus-net" Version="6.0.0" />
+    </ItemGroup>
+
+</Project>

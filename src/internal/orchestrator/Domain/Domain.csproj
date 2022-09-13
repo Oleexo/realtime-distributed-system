@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <RootNamespace>$(BaseName).Orchestrator.Domain</RootNamespace>
+        <AssemblyName>$(BaseName).Orchestrator.Domain</AssemblyName>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\common\Common\Common.csproj"/>
+        <ProjectReference Include="..\..\common\Domain\Domain.csproj"/>
+    </ItemGroup>
+
+</Project>

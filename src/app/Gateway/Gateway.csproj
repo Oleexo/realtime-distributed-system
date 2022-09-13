@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <AssemblyName>$(BaseName).Gateway.Api</AssemblyName>
+        <RootNamespace>$(BaseName).Gateway.Api</RootNamespace>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Ocelot" Version="18.0.0" />
+    </ItemGroup>
+
+</Project>

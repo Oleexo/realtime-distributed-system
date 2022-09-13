@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <RootNamespace>$(BaseName).Distributor.Commands</RootNamespace>
+        <AssemblyName>$(BaseName).Distributor.Commands</AssemblyName>
+
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\common\Commands\Commands.csproj" />
+        <ProjectReference Include="..\..\common\Domain\Domain.csproj" />
+        <ProjectReference Include="..\BrokerPusher\BrokerPusher.csproj" />
+    </ItemGroup>
+
+</Project>

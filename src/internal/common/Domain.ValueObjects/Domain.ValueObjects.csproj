@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <RootNamespace>$(BaseName).Common.Domain.ValueObjects</RootNamespace>
+        <AssemblyName>$(BaseName).Common.Domain.ValueObjects</AssemblyName>
+
+    </PropertyGroup>
+
+</Project>

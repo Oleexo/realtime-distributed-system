@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <RootNamespace>$(BaseName).Common.StartupTasks</RootNamespace>
+        <AssemblyName>$(BaseName).Common.StartupTasks</AssemblyName>
+    </PropertyGroup>
+    <ItemGroup>
+        <FrameworkReference Include="Microsoft.AspNetCore.App"/>
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\StartupTasks.Abstractions\StartupTasks.Abstractions.csproj"/>
+    </ItemGroup>
+
+</Project>

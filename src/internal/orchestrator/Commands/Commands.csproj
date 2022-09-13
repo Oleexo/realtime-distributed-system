@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <RootNamespace>$(BaseName).Orchestrator.Commands</RootNamespace>
+        <AssemblyName>$(BaseName).Orchestrator.Commands</AssemblyName>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\common\Commands\Commands.csproj"/>
+        <ProjectReference Include="..\..\common\Common\Common.csproj"/>
+        <ProjectReference Include="..\BrokerManager\BrokerManager.csproj"/>
+        <ProjectReference Include="..\Domain\Domain.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.1"/>
+        <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0"/>
+    </ItemGroup>
+
+</Project>

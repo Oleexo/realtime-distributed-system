@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <RootNamespace>$(BaseName).Common.StartupTasks.Abstractions</RootNamespace>
+        <AssemblyName>$(BaseName).Common.StartupTasks.Abstractions</AssemblyName>
+    </PropertyGroup>
+
+</Project>

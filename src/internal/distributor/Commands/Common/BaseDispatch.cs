@@ -16,10 +16,10 @@ public abstract class BaseDispatch {
         _userConnectionRepository = userConnectionRepository;
     }
 
-    protected Task DispatchToConnectedUsersAsync(IReadOnlyCollection<string> recipients,
-                                                 string                      tag,
-                                                 Message                     message,
-                                                 CancellationToken           cancellationToken = default) {
+    protected Task<Result<Unit>> DispatchToConnectedUsersAsync(IReadOnlyCollection<string> recipients,
+                                                               string                      tag,
+                                                               Message                     message,
+                                                               CancellationToken           cancellationToken = default) {
         var letter = new Letter {
             Message = message,
             Type    = LetterType.Message,
@@ -28,7 +28,7 @@ public abstract class BaseDispatch {
         return DispatchToConnectedUsersAsync(letter, recipients, cancellationToken);
     }
 
-    protected Task DispatchToConnectedUsersAsync(IReadOnlyCollection<string> recipients,
+    protected Task<Result<Unit>> DispatchToConnectedUsersAsync(IReadOnlyCollection<string> recipients,
                                                  string                      tag,
                                                  Event                       @event,
                                                  CancellationToken           cancellationToken = default) {

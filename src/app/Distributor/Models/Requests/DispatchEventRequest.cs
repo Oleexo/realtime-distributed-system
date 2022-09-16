@@ -11,4 +11,7 @@ public record DispatchEventRequest {
 
     [JsonPropertyName("tag")]
     public string Tag { get; init; } = string.Empty;
+
+    [JsonPropertyName("author")]
+    public string Author { get; init; } = string.Empty;
 }

@@ -17,6 +17,7 @@ public sealed class DispatchEventCommandHandler : BaseDispatch, ICommandHandler<
     public async Task<Result<Unit>> Handle(DispatchEventCommand request,
                                            CancellationToken    cancellationToken) {
         var @event = new Event {
+            Author = request.Author,
             Content = request.Content
         };
         await DispatchToConnectedUsersAsync(request.Recipients, request.Tag, @event, cancellationToken);

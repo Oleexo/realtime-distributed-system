@@ -13,6 +13,18 @@
       "UpstreamHttpMethod": [ "Get","Post", "Put", "Delete" ]
     },
     {
+      "DownstreamPathTemplate": "/channel/read",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5282
+        }
+      ],
+      "UpstreamPathTemplate": "/channel/read",
+      "UpstreamHttpMethod": [ "Post" ]
+    },
+    {
       "DownstreamPathTemplate": "/event",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
@@ -22,6 +34,18 @@
         }
       ],
       "UpstreamPathTemplate": "/event",
+      "UpstreamHttpMethod": [ "Post" ]
+    },
+    {
+      "DownstreamPathTemplate": "/channel/typing",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5271
+        }
+      ],
+      "UpstreamPathTemplate": "/channel/typing",
       "UpstreamHttpMethod": [ "Post" ]
     },
     {

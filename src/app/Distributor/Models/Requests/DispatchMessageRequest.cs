@@ -14,4 +14,7 @@ public record DispatchMessageRequest {
 
     [JsonPropertyName("channel_id")]
     public string ChannelId { get; init; } = string.Empty;
+    
+    [JsonPropertyName("author")]
+    public string Author { get; init; } = string.Empty;
 }

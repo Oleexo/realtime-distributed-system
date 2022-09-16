@@ -1,4 +1,3 @@
-using Amazon.Runtime;
 using Amazon.SimpleNotificationService;
 using Amazon.SQS;
 using MassTransit;
@@ -9,6 +8,7 @@ using Oleexo.RealtimeDistributedSystem.Common.Data.Repositories.DynamoDb;
 using Oleexo.RealtimeDistributedSystem.Distributor.Api.Models.Mappings;
 using Oleexo.RealtimeDistributedSystem.Distributor.Api.Models.Requests;
 using Oleexo.RealtimeDistributedSystem.Distributor.BrokerPusher.Sqs;
+using Oleexo.RealtimeDistributedSystem.Distributor.Commands.ChannelTyping;
 using Oleexo.RealtimeDistributedSystem.Distributor.Commands.DispatchEvent;
 using Oleexo.RealtimeDistributedSystem.Distributor.Commands.DispatchMessage;
 using Oleexo.RealtimeDistributedSystem.Distributor.Consumers;
@@ -45,6 +45,8 @@ app.UseHttpMetrics();
 app.MapPost("/message", RunCommandAsync<DispatchMessageRequest, DispatchMessageCommand>);
 // Post an event
 app.MapPost("/event", RunCommandAsync<DispatchEventRequest, DispatchEventCommand>);
+
+app.MapPost("/channel/typing", RunCommandAsync<ChannelTypingRequest, ChannelTypingCommand>);
 
 app.UseMetricServer();
 

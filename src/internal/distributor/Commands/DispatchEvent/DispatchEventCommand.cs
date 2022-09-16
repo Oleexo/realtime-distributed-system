@@ -6,4 +6,5 @@ public record DispatchEventCommand : ICommand {
     public string                      Content    { get; init; } = string.Empty;
     public IReadOnlyCollection<string> Recipients { get; init; } = new List<string>();
     public string                      Tag        { get; init; } = string.Empty;
+    public string                      Author     { get; init; }  = string.Empty;
 }
